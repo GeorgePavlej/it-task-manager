@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class Position:
+class Position(models.Model):
     name = models.CharField(max_length=56)
 
     def __str__(self) -> str:
@@ -10,7 +10,12 @@ class Position:
 
 
 class Employee(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    position = models.ForeignKey(
+        Position,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = "employee"
@@ -20,7 +25,7 @@ class Employee(AbstractUser):
         return f"{self.username} ({self.first_name} {self.last_name})"
 
 
-class TaskType:
+class TaskType(models.Model):
     name = models.CharField(max_length=56)
 
     def __str__(self) -> str:
@@ -30,15 +35,15 @@ class TaskType:
 class Task(models.Model):
 
     PRIORITY_CHOICES = [
-        (1, "Urgent"),
+        (1, "Low"),
         (2, "High"),
-        (3, "Low"),
+        (3, "Urgent"),
     ]
 
     priority = models.IntegerField(
-        max_length=1,
         choices=PRIORITY_CHOICES,
-        default=2)
+        default=2
+    )
 
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=255)

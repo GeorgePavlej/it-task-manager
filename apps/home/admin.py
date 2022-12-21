@@ -1,8 +1,10 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from django.contrib import admin
 
-# Register your models here.
+from apps.home.models import Employee, Task, TaskType, Position
+
+admin.site.register(Employee)
+admin.site.register(Task)
+admin.site.register(TaskType)
+admin.site.register(Position)
+
+
