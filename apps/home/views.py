@@ -35,6 +35,11 @@ class EmployeeListView(generic.ListView):
     template_name = "home/employee_list.html"
 
 
+class EmployeeDetailView(generic.DetailView):
+    model = Employee
+    template_name = "home/employee_detail.html"
+
+
 @login_required(login_url="/login/")
 def pages(request):
     context = {}

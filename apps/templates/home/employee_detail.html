@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Blog Author {% endblock %} 
+{% block title %} Details {% endblock %}
 
 {% block body_class %} blog-author {% endblock %}
 
@@ -29,14 +29,14 @@
             <div class="row py-5">
               <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <h3 class="mb-0">Michael Roven</h3>
+                  <h3 class="mb-0">{{ employee.first_name}} {{ employee.last_name}}</h3>
                   <div class="d-block">
                     <button type="button" class="btn btn-sm btn-outline-info text-nowrap mb-0">Follow</button>
                   </div>
                 </div>
                 <div class="row mb-4">
                   <div class="col-auto">
-                    <span class="h6">323</span>
+                    <span class="h6">{{ employee.position }}</span>
                     <span>Posts</span>
                   </div>
                   <div class="col-auto">
