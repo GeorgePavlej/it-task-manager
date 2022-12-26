@@ -5,11 +5,13 @@ Copyright (c) 2019 - present AppSeed.us
 
 from django import template
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
+from apps.home.forms import EmployeeCreationForm, EmployeeUpdateForm
 from apps.home.models import Task, Employee, Position
 
 
@@ -33,6 +35,18 @@ class EmployeeListView(generic.ListView):
     model = Employee
     queryset = Employee.objects.all().select_related("position")
     template_name = "home/employee_list.html"
+
+
+class EmployeeCreateView(generic.CreateView):
+    model = Employee
+    form_class = EmployeeCreationForm
+    success_url = reverse_lazy("home:employee-list")
+
+
+class EmployeeUpdateView(generic.UpdateView):
+    model = Employee
+    form_class = EmployeeUpdateForm
+    success_url = reverse_lazy("home:employee-list")
 
 
 class EmployeeDetailView(generic.DetailView):
