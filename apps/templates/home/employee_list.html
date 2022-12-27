@@ -3,8 +3,9 @@
 
 {% block content %}
 
-  <div style="margin-top: 120px" class="container-fluid py-4">
-
+  <div style="margin-top: 120px; position: relative" class="container-fluid py-4">
+    <a style="position: absolute;top: 40px; right: 40px; z-index: 1" href="{% url 'home:employee-create' %}"
+       class="btn btn-sm btn-outline-info text-nowrap mb-0">Create</a>
     <div class="row">
       {% if employee_list %}
         <div class="col-12">
@@ -20,7 +21,7 @@
           <tr>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employee</th>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Position</th>
-            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Task type</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date joined</th>
             <th class="text-secondary opacity-7"></th>
           </tr>

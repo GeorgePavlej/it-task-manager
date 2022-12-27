@@ -1,8 +1,3 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,8 +6,13 @@ from django.template import loader
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from apps.home.forms import EmployeeCreationForm, EmployeeUpdateForm
-from apps.home.models import Task, Employee, Position
+from apps.home.forms import (
+    EmployeeCreationForm,
+    EmployeeUpdateForm,
+    TaskCreationForm,
+    TaskUpdateForm,
+)
+from apps.home.models import Task, Employee, Position, TaskType
 
 
 @login_required(login_url="/login/")
@@ -49,9 +49,58 @@ class EmployeeUpdateView(generic.UpdateView):
     success_url = reverse_lazy("home:employee-list")
 
 
+class EmployeeDeleteView(generic.DeleteView):
+    model = Employee
+    success_url = reverse_lazy("home:employee-list")
+
+
 class EmployeeDetailView(generic.DetailView):
     model = Employee
     template_name = "home/employee_detail.html"
+
+
+class TaskListView(generic.ListView):
+    model = Task
+    queryset = Task.objects.all().select_related("task_type").prefetch_related("assignees")
+    template_name = "home/task_list.html"
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    form_class = TaskCreationForm
+    success_url = reverse_lazy("home:task-list")
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    form_class = TaskUpdateForm
+    success_url = reverse_lazy("home:task-list")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("home:task-list")
+
+
+class TaskTypeListView(generic.ListView):
+    model = TaskType
+    template_name = "home/type_list.html"
+
+
+class TaskTypeCreateView(generic.CreateView):
+    model = TaskType
+    success_url = reverse_lazy("home:type-list")
+    fields = "__all__"
+
+
+class TaskTypeUpdateView(generic.UpdateView):
+    model = TaskType
+    success_url = reverse_lazy("home:type-list")
+
+
+class TaskTypeDeleteView(generic.DeleteView):
+    model = TaskType
+    success_url = reverse_lazy("home:type-list")
 
 
 @login_required(login_url="/login/")
