@@ -26,7 +26,7 @@ DEBUG = env('DEBUG')
 # Assets Management
 ASSETS_ROOT = os.getenv("ASSETS_ROOT", "/static/assets")
 # load production server from .env
-ALLOWED_HOSTS        = ['localhost', 'localhost:85', '127.0.0.1',               env('SERVER', default='127.0.0.1') ]
+ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1', env('SERVER', default='127.0.0.1') ]
 CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + env('SERVER', default='127.0.0.1') ]
 
 # Application definition
@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "crispy_bootstrap5",
+    "crispy_forms",
     'apps.home',
-    "crispy_forms"
+
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

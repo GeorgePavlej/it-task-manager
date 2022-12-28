@@ -1,13 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-{% for task in task_list %}
+{% extends "layouts/base.html" %}
 
-<h1>{{ task }}</h1>
-{% endfor %}
-</body>
-</html>
+
+{% block content %}
+
+  <div style="margin-top: 120px; position: relative" class="container-fluid py-4">
+  <a style="position: absolute;top: 40px; right: 40px; z-index: 1" href="{% url 'home:task-create' %}"
+     class="btn btn-sm btn-outline-info text-nowrap mb-0">Create</a>
+  <div class="row">
+    {% if task_list %}
+      <div class="col-12">
+      <div class="card mb-4">
+      <div class="card-header pb-0">
+        <h6>Tasks table</h6>
+      </div>
+      <div class="card-body px-0 pt-0 pb-2">
+      <div class="table-responsive p-0">
+
+      <table class="table align-items-center mb-0">
+        <thead>
+        <tr>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Priority</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Task assigned to
+          </th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Task type</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deadline</th>
+          <th class="text-secondary opacity-7"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in task_list %}
+          <tr>
+            <td>
+              <a href="{% url 'home:task-detail' pk=task.pk %}">
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{ task.name }}</h6>
+                  </div>
+                </div>
+              </a>
+            </td>
+            <td>
+              {% if task.priority == 1 %}
+                <span class="badge badge-sm bg-gradient-secondary">{{ task.get_priority_display }}</span>{% endif %}
+              {% if task.priority == 2 %}
+                <span class="badge badge-sm bg-gradient-warning">{{ task.get_priority_display }}</span>{% endif %}
+              {% if task.priority == 3 %}
+                <span class="badge badge-sm bg-gradient-danger">{{ task.get_priority_display }}</span>{% endif %}
+            </td>
+            <td class="align-middle text-center text-sm">
+              <a>
+                {% if task.is_completed %} Done {% else %} Not done {% endif %}</a>
+            </td>
+            <td class="align-middle text-center">
+              <div class="d-flex align-items-center justify-content-center">
+                <div>
+                  <img src="{{ ASSETS_ROOT }}/img/team-1.jpg" class="avatar avatar-sm me-3" alt="user1">
+                </div>
+              </div>
+            </td>
+          <td class="align-middle text-center text-sm">
+              <a>{{ task.task_type }}</a>
+            </td>
+          <td class="align-middle text-center text-sm">
+              <a>{{ task.deadline }}</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+          </tbody>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>There are no tasks in the list.</p>
+    {% endif %}
+    </div>
+    </div>
+    </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
