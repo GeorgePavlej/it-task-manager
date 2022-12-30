@@ -108,6 +108,28 @@ class TaskTypeDeleteView(generic.DeleteView):
     success_url = reverse_lazy("home:type-list")
 
 
+class PositionListView(generic.ListView):
+    model = Position
+
+
+class PositionUpdateView(generic.UpdateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("home:position-list")
+
+
+class PositionCreateView(generic.CreateView):
+    model = Position
+    fields = "__all__"
+    template_name = "home/position_form.html"
+    success_url = reverse_lazy("home:position-list")
+
+
+class PositionDeleteView(generic.DeleteView):
+    model = Position
+    success_url = reverse_lazy("home:position-list")
+
+
 @login_required(login_url="/login/")
 def pages(request):
     context = {}

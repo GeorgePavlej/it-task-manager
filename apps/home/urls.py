@@ -15,6 +15,10 @@ from apps.home.views import (
     TaskTypeCreateView,
     TaskTypeUpdateView,
     TaskTypeDeleteView,
+    PositionListView,
+    PositionUpdateView,
+    PositionCreateView,
+    PositionDeleteView
     )
 
 urlpatterns = [
@@ -41,6 +45,12 @@ urlpatterns = [
     path("task-type/create/", TaskTypeCreateView.as_view(), name="type-create"),
     path("task-type/<int:pk>/update/", TaskTypeUpdateView.as_view(), name="type-update"),
     path("task-type/<int:pk>/delete/", TaskTypeDeleteView.as_view(), name="type-delete"),
+
+    # Position List
+    path("position/", PositionListView.as_view(), name="position-list"),
+    path("position/create/", PositionCreateView.as_view(), name="position-create"),
+    path("position/<int:pk>/update/", PositionUpdateView.as_view(), name="position-update"),
+    path("position/<int:pk>/delete/", PositionDeleteView.as_view(), name="position-delete"),
 
 
     # Matches any html file
