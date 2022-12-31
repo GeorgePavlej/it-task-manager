@@ -53,3 +53,47 @@ class TaskUpdateForm(forms.ModelForm):
             "task_type",
             "assignees"
         )
+
+
+class EmployeeSearchForm(forms.Form):
+    username = forms.CharField(
+        max_length=63,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by first username"}
+        )
+    )
+
+
+class PositionSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=63,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search"}
+        )
+    )
+
+
+class TaskSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=63,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by task name"}
+        )
+    )
+
+
+class TypeSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=63,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search"}
+        )
+    )

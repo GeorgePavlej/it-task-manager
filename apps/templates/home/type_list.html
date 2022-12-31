@@ -1,10 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-<h1>{% for type in tasktype_list %} {{ type.name }} {% endfor %}</h1>
-</body>
-</html>
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+
+{% block content %}
+
+  <div style="margin-top: 120px; position: relative" class="container-fluid py-4">
+    <a style="position: absolute;top: 40px; right: 40px; z-index: 1" href="{% url 'home:type-create' %}"
+       class="btn btn-sm btn-outline-info text-nowrap mb-0">Create</a>
+
+    <form action="" method="get" class="form-inline">
+      {{ search_form|crispy }}
+      <input class="btn" style="background-color: bisque" type="submit" value="Search">
+    </form>
+
+    <div class="row">
+      {% if tasktype_list %}
+        <div class="col-12">
+        <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Task type table</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+          <thead>
+          <tr>
+            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">TaskType</th>
+            <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Update</th>
+            <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Delete</th>
+            <th class="text-secondary opacity-7"></th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for type in tasktype_list %}
+            <tr>
+              <td>
+                <p class="text-xs font-weight-bold mb-0">{{ type.name }}</p>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <a href="{% url 'home:type-update' pk=type.pk %}"
+                   class="btn btn-sm btn-outline-secondary text-nowrap mb-0">Update</a>
+              </td>
+              <td class="align-middle text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                  <a href="{% url 'home:type-delete' pk=type.pk %}"
+                     class="btn btn-sm btn-outline-danger text-nowrap mb-0">Delete</a>
+                  <div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+            </tbody>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>There are no task types in the list.</p>
+      {% endif %}
+      </div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

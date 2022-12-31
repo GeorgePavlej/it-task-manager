@@ -6,13 +6,17 @@ from django.template import loader
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
+from apps.home.models import Task, Employee, Position, TaskType
 from apps.home.forms import (
     EmployeeCreationForm,
     EmployeeUpdateForm,
     TaskCreationForm,
     TaskUpdateForm,
+    EmployeeSearchForm,
+    TaskSearchForm,
+    TypeSearchForm,
+    PositionSearchForm,
 )
-from apps.home.models import Task, Employee, Position, TaskType
 
 
 @login_required(login_url="/login/")
@@ -35,6 +39,27 @@ class EmployeeListView(generic.ListView):
     model = Employee
     queryset = Employee.objects.all().select_related("position")
     template_name = "home/employee_list.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(EmployeeListView, self).get_context_data(**kwargs)
+
+        username = self.request.GET.get("username", "")
+
+        context["search_form"] = EmployeeSearchForm(initial={
+            "username": username
+        })
+
+        return context
+
+    def get_queryset(self):
+        form = EmployeeSearchForm(self.request.GET)
+        self.queryset = Employee.objects.all()
+
+        if form.is_valid():
+            return self.queryset.filter(
+                username__icontains=form.cleaned_data["username"]
+            )
+        return self.queryset
 
 
 class EmployeeCreateView(generic.CreateView):
@@ -64,6 +89,27 @@ class TaskListView(generic.ListView):
     queryset = Task.objects.all().select_related("task_type").prefetch_related("assignees")
     template_name = "home/task_list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+
+        name = self.request.GET.get("name", "")
+
+        context["search_form"] = TaskSearchForm(initial={
+            "name": name
+        })
+
+        return context
+
+    def get_queryset(self):
+        form = TaskSearchForm(self.request.GET)
+        self.queryset = Task.objects.all()
+
+        if form.is_valid():
+            return self.queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return self.queryset
+
 
 class TaskDetailView(generic.DetailView):
     model = Task
@@ -87,29 +133,72 @@ class TaskDeleteView(generic.DeleteView):
     success_url = reverse_lazy("home:task-list")
 
 
-class TaskTypeListView(generic.ListView):
+class TypeListView(generic.ListView):
     model = TaskType
     template_name = "home/type_list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TypeListView, self).get_context_data(**kwargs)
 
-class TaskTypeCreateView(generic.CreateView):
+        name = self.request.GET.get("name", "")
+
+        context["search_form"] = TypeSearchForm(initial={
+            "name": name
+        })
+
+        return context
+
+    def get_queryset(self):
+        form = TypeSearchForm(self.request.GET)
+        self.queryset = TaskType.objects.all()
+
+        if form.is_valid():
+            return self.queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return self.queryset
+
+
+class TypeCreateView(generic.CreateView):
     model = TaskType
-    success_url = reverse_lazy("home:type-list")
     fields = "__all__"
-
-
-class TaskTypeUpdateView(generic.UpdateView):
-    model = TaskType
     success_url = reverse_lazy("home:type-list")
 
 
-class TaskTypeDeleteView(generic.DeleteView):
+class TypeUpdateView(generic.UpdateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("home:type-list")
+
+
+class TypeDeleteView(generic.DeleteView):
     model = TaskType
     success_url = reverse_lazy("home:type-list")
 
 
 class PositionListView(generic.ListView):
     model = Position
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PositionListView, self).get_context_data(**kwargs)
+
+        name = self.request.GET.get("name", "")
+
+        context["search_form"] = PositionSearchForm(initial={
+            "name": name
+        })
+
+        return context
+
+    def get_queryset(self):
+        form = PositionSearchForm(self.request.GET)
+        self.queryset = Position.objects.all()
+
+        if form.is_valid():
+            return self.queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return self.queryset
 
 
 class PositionUpdateView(generic.UpdateView):
@@ -133,8 +222,6 @@ class PositionDeleteView(generic.DeleteView):
 @login_required(login_url="/login/")
 def pages(request):
     context = {}
-    # All resource paths end in .html.
-    # Pick out the html file name from the url. And load that template.
     try:
 
         load_template = request.path.split('/')[-1]
