@@ -24,11 +24,13 @@ def index(request):
     num_tasks = Task.objects.count()
     num_employees = Employee.objects.count()
     num_positions = Position.objects.count()
+    num_types = TaskType.objects.count()
 
     context = {
         'num_tasks': num_tasks,
         "num_employees": num_employees,
-        "num_positions": num_positions
+        "num_positions": num_positions,
+        "num_types": num_types,
     }
 
     html_template = loader.get_template('home/index.html')
@@ -38,6 +40,7 @@ def index(request):
 class EmployeeListView(generic.ListView):
     model = Employee
     queryset = Employee.objects.all().select_related("position")
+    paginate_by = 2
     template_name = "home/employee_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -81,6 +84,7 @@ class EmployeeDeleteView(generic.DeleteView):
 
 class EmployeeDetailView(generic.DetailView):
     model = Employee
+    paginate_by = 2
     template_name = "home/employee_detail.html"
 
 
@@ -114,6 +118,7 @@ class TaskListView(generic.ListView):
 
 class TaskDetailView(generic.DetailView):
     model = Task
+    paginate_by = 2
     template_name = "home/task_detail.html"
 
 
@@ -136,6 +141,7 @@ class TaskDeleteView(generic.DeleteView):
 
 class TypeListView(generic.ListView):
     model = TaskType
+    paginate_by = 2
     template_name = "home/type_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -179,6 +185,7 @@ class TypeDeleteView(generic.DeleteView):
 
 class PositionListView(generic.ListView):
     model = Position
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PositionListView, self).get_context_data(**kwargs)

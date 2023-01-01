@@ -44,7 +44,7 @@
                     <span class="h6">Task type: {{ task.task_type }}</span>
                   </div>
                   <div class="col-auto">
-                    <span class="h6">Deadline: {{ task.deadline }}</span>
+                    <span class="h6">Deadline: {{ task.deadline|date:"d/m/Y" }}</span>
                   </div>
                 </div>
               </div>

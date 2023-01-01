@@ -47,7 +47,7 @@
                     <span class="h6">Email: {{ employee.email }}</span>
                   </div>
                   <div class="col-auto">
-                    <span class="h6">Date joined: {{ employee.date_joined|date:"Y-m-d" }}</span>
+                    <span class="h6">Date joined: {{ employee.date_joined|date:"d/m/Y" }}</span>
                   </div>
                 </div>
               </div>
@@ -82,7 +82,7 @@
             {% for task in employee.tasks.all %}
               <tr>
                 <td>
-                  <a href="{% url 'home:task-detail' pk=task.pk%}">
+                  <a href="{% url 'home:task-detail' pk=task.pk %}">
                     <div class="d-flex px-2 py-1">
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm">{{ task }}</h6>
@@ -91,15 +91,24 @@
                   </a>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ task.priority }}</p>
+                  {% if task.priority == 1 %}
+                    <span class="badge badge-sm bg-gradient-dark">{{ task.get_priority_display }}</span>
+                  {% elif task.priority == 2 %}
+                    <span class="badge badge-sm bg-gradient-warning">{{ task.get_priority_display }}</span>
+                  {% elif task.priority == 3 %}
+                    <span class="badge badge-sm bg-gradient-danger">{{ task.get_priority_display }}</span>
+                  {% endif %}
                 </td>
                 <td class="align-middle text-center text-sm">
-                <span class="badge badge-sm bg-gradient-success">{% for task in employee.tasks.all %}
-                  {{ task.task_type }}</span>
-                  </td>
-                  <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ task.description }} {% endfor %}</span>
-                  </td>
+                  <span class="text-secondary text-xs font-weight-bold">{{ task.task_type }}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span type="button" class="badge badge-sm bg-gradient-secondary" data-bs-container="body"
+                        data-bs-toggle="popover" data-bs-placement="bottom"
+                        data-bs-content="{{ task.description }}">
+                    Open
+                  </span>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -115,9 +124,6 @@
         </div>
       </div>
     </section>
-    <!-- END Testimonials w/ user image & text & info -->
-    <!-- START Blogs w/ 4 cards w/ image & text & link -->
-    <!-- END Blogs w/ 4 cards w/ image & text & link -->
   </div>
 
 

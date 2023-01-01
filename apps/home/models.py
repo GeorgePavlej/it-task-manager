@@ -21,6 +21,21 @@ class Employee(AbstractUser):
         verbose_name = "employee"
         verbose_name_plural = "employees"
 
+    @property
+    def calc_progress(self):
+        tasks = self.tasks.all()
+        assigned_tasks = self.tasks.count()
+        counter_tasks = 0
+
+        if tasks is None or tasks is 0:
+            return 0
+
+        for task in tasks:
+            if task.is_completed:
+                counter_tasks += 1
+        result = int((counter_tasks * 100) / assigned_tasks)
+        return result
+
     def __str__(self) -> str:
         return f"{self.username} ({self.first_name} {self.last_name})"
 

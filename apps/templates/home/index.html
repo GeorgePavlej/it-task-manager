@@ -59,7 +59,7 @@
   <section class="my-5 py-5">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="row align-items-center">
             <div class="rotating-card-container">
               <div class="card card-rotate card-background card-background-mask-dark shadow-dark mt-md-0 mt-5">
@@ -87,7 +87,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="row align-items-center">
             <div class="rotating-card-container">
               <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
@@ -97,7 +97,7 @@
                     <i class="material-icons text-white text-4xl my-3">touch_app</i>
                     <h2 class="text-white text-primary"><span id="state2" countTo={{ num_tasks }}>0</span>  Task{{ num_tasks|pluralize }}</h2>
                       Priorities help you prioritize tasks when
-                                          Priorities help you prioritize tasks when
+                                          ities help you prioritize tasks when
                   </div>
                 </div>
                 <div class="back back-background"
@@ -114,7 +114,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="row align-items-center">
             <div class="rotating-card-container">
               <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
@@ -123,9 +123,7 @@
                   <div class="card-body py-7 text-center">
                     <i class="material-icons text-white text-4xl my-3">touch_app</i>
                     <h2 class="text-white text-primary"><span id="state3" countTo={{ num_positions }}>0</span>  Position{{ num_positions|pluralize }}</h2>
-                    <p class="text-white opacity-8">All the Bootstrap components that you need in a development have
-                      been
-                    </p>
+                    <p class="text-white opacity-8">All the Bootstrap components that you need in a development have</p>
                   </div>
                 </div>
                 <div class="back back-background"
@@ -136,6 +134,33 @@
                       full-functional
                       code because all elements are implemented.</p>
                     <a href="{% url 'home:position-list' %}" class="btn btn-white btn-sm w-50 mx-auto mt-3">All positions</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+                <div class="col-lg-3">
+          <div class="row align-items-center">
+            <div class="rotating-card-container">
+              <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
+                <div class="front front-background"
+                     style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80); background-size: cover;">
+                  <div class="card-body py-7 text-center">
+                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
+                    <h2 class="text-white text-primary"><span id="state4" countTo={{ num_types }}>0</span>  Task type{{ num_types|pluralize }}</h2>
+                      Priorities help you prioritize tasks when
+                                          Priorities help you prioritize tasks when
+                  </div>
+                </div>
+                <div class="back back-background"
+                     style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1365&q=80); background-size: cover;">
+                  <div class="card-body pt-7 text-center">
+                    <h3 class="text-white">Discover More</h3>
+                    <p class="text-wDesign Blockshite opacity-8"> You will save a lot of time going from prototyping to
+                      full-functional
+                      code because all elements are implemented.</p>
+                    <a href="{% url 'home:type-list' %}" class="btn btn-white btn-sm w-50 mx-auto mt-3">All task types</a>
                   </div>
                 </div>
               </div>
@@ -333,6 +358,15 @@
     }
     if (document.getElementById('state3')) {
         const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
+        if (!countUp2.error) {
+            countUp2.start();
+        } else {
+            console.error(countUp2.error);
+        }
+        ;
+    }
+    if (document.getElementById('state4')) {
+        const countUp2 = new CountUp('state4', document.getElementById("state4").getAttribute("countTo"));
         if (!countUp2.error) {
             countUp2.start();
         } else {
