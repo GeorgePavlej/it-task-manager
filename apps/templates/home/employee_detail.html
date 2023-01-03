@@ -60,7 +60,7 @@
           <div class="col-12">
           <div class="card mb-4">
           <div class="card-header pb-0">
-            <h3>Tasks to be completed</h3>
+            <h3>Assigned tasks</h3>
           </div>
           <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -109,9 +109,24 @@
                     Open
                   </span>
                 </td>
-              </tr>
-              <tr>
-                <td>
+                {% if task.is_completed %}
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">Done</span>
+                  </td>
+                {% else %}
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">Not Done</span>
+                  </td>
+                {% endif %}
+                {% if task.is_completed %}
+                  <td class="align-middle text-center">
+                    <a type="button" href="{% url 'home:task-status' pk=task.id pk2=employee.id %}" class="badge badge-sm bg-gradient-secondary float-right">Change</a>
+                  </td>
+                {% else %}
+                  <td class="align-middle text-center">
+                    <a type="button" href="{% url 'home:task-status' pk=task.id pk2=employee.id %}" class="badge badge-sm bg-gradient-success float-right">Complete</a>
+                  </td>
+                {% endif %}
               </tbody>
             {% endfor %}
           </table>
@@ -125,8 +140,6 @@
       </div>
     </section>
   </div>
-
-
 
 {% endblock content %}
 

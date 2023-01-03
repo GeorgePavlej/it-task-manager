@@ -18,7 +18,8 @@ from apps.home.views import (
     PositionListView,
     PositionUpdateView,
     PositionCreateView,
-    PositionDeleteView
+    PositionDeleteView,
+    task_status,
 )
 
 urlpatterns = [
@@ -52,6 +53,11 @@ urlpatterns = [
         "employee/<int:pk>/",
         EmployeeDetailView.as_view(),
         name="employee-detail"
+    ),
+    path(
+        "employee/<int:pk>/<int:pk2>/task-status/",
+        task_status,
+        name="task-status",
     ),
 
     # Task List

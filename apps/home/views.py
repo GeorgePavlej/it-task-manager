@@ -2,6 +2,7 @@ from django import template
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -225,6 +226,14 @@ class PositionCreateView(generic.CreateView):
 class PositionDeleteView(generic.DeleteView):
     model = Position
     success_url = reverse_lazy("home:position-list")
+
+
+@login_required
+def task_status(request, pk, pk2):
+    task = get_object_or_404(Task, pk=pk)
+    task.is_completed = not task.is_completed
+    task.save()
+    return redirect("home:employee-detail", pk=pk2)
 
 
 @login_required(login_url="/login/")
