@@ -56,114 +56,54 @@
   </div>
 </header>
 <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
-  <section class="my-5 py-5">
+  <section class="pt-3 pb-4" id="count-stats">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3">
-          <div class="row align-items-center">
-            <div class="rotating-card-container">
-              <div class="card card-rotate card-background card-background-mask-dark shadow-dark mt-md-0 mt-5">
-                <div class="front front-background"
-                     style="background-image: url(https://blog-cdn.everhour.com/blog/wp-content/uploads/2021/01/team-dynamics.jpg); background-size: cover;">
-                  <div class="card-body py-7 text-center">
-                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                    <h2 class="text-white text-primary"><span id="state1" countTo={{ num_employees }}>0</span>  Employee{{ num_employees|pluralize }}</h2>
-                    <p class="text-white opacity-8">Do you want to see our employees?
-                      Press here to see all of us)
-                    </p>
-                  </div>
+        <div class="col-lg-9 mx-auto py-3">
+          <div class="row">
+            <div class="col-md-3 position-relative">
+              <a href="{% url 'home:employee-list' %}">
+                <div class="p-3 text-center">
+                  <h1 class="text-gradient text-info"><span id="state1" countTo={{ num_employees }}>0</span>+</h1>
+                  <h5 class="mt-3">Employee{{ num_employees|pluralize }}</h5>
+                  <p class="text-gradient text-dark text-sm font-weight-normal">From buttons, to inputs, navbars, alerts or cards, you are
+                    covered</p>
                 </div>
-                <div class="back back-background"
-                     style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1365&q=80); background-size: cover;">
-                  <div class="card-body pt-7 text-center">
-                    <h3 class="text-white">Discover More</h3>
-                    <p class="text-wDesign Blockshite opacity-8"> You will save a lot of time going from prototyping to
-                      full-functional
-                      code because all elements are implemented.</p>
-                    <a href="{% url 'home:employee-list' %}" class="btn btn-white btn-sm w-50 mx-auto mt-3">All employee</a>
-                  </div>
-                </div>
-              </div>
+              </a>
+              <hr class="vertical dark">
             </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="row align-items-center">
-            <div class="rotating-card-container">
-              <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-                <div class="front front-background"
-                     style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80); background-size: cover;">
-                  <div class="card-body py-7 text-center">
-                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                    <h2 class="text-white text-primary"><span id="state2" countTo={{ num_tasks }}>0</span>  Task{{ num_tasks|pluralize }}</h2>
-                      Priorities help you prioritize tasks when
-                                          ities help you prioritize tasks when
-                  </div>
+            <div class="col-md-3 position-relative">
+              <a href="{% url 'home:task-list' %}">
+                <div class="p-3 text-center">
+                  <h1 class="text-gradient text-info"><span id="state2" countTo={{ num_tasks }}>0</span>+</h1>
+                  <h5 class="mt-3">Task{{ num_tasks|pluralize }}</h5>
+                  <p class="text-gradient text-dark text-sm font-weight-normal">Mix the sections, change the colors and unleash your
+                    creativity</p>
                 </div>
-                <div class="back back-background"
-                     style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1365&q=80); background-size: cover;">
-                  <div class="card-body pt-7 text-center">
-                    <h3 class="text-white">Discover More</h3>
-                    <p class="text-wDesign Blockshite opacity-8"> You will save a lot of time going from prototyping to
-                      full-functional
-                      code because all elements are implemented.</p>
-                    <a href="{% url 'home:task-list' %}" class="btn btn-white btn-sm w-50 mx-auto mt-3">All tasks</a>
-                  </div>
-                </div>
-              </div>
+              </a>
+              <hr class="vertical dark">
             </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="row align-items-center">
-            <div class="rotating-card-container">
-              <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-                <div class="front front-background"
-                     style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80); background-size: cover;">
-                  <div class="card-body py-7 text-center">
-                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                    <h2 class="text-white text-primary"><span id="state3" countTo={{ num_positions }}>0</span>  Position{{ num_positions|pluralize }}</h2>
-                    <p class="text-white opacity-8">All the Bootstrap components that you need in a development have</p>
-                  </div>
+            <div class="col-md-3 position-relative">
+              <a href="{% url 'home:type-list' %}">
+                <div class="p-3 text-center">
+                  <h1 class="text-gradient text-info"><span id="state3" countTo={{ num_types }}>0</span>+</h1>
+                  <h5 class="mt-3">Task type{{ num_positions|pluralize }}</h5>
+                  <p class="text-gradient text-dark text-sm font-weight-normal">Mix the sections, change the colors and unleash your
+                    creativity</p>
                 </div>
-                <div class="back back-background"
-                     style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1365&q=80); background-size: cover;">
-                  <div class="card-body pt-7 text-center">
-                    <h3 class="text-white">Discover More</h3>
-                    <p class="text-wDesign Blockshite opacity-8"> You will save a lot of time going from prototyping to
-                      full-functional
-                      code because all elements are implemented.</p>
-                    <a href="{% url 'home:position-list' %}" class="btn btn-white btn-sm w-50 mx-auto mt-3">All positions</a>
-                  </div>
-                </div>
-              </div>
+              </a>
+              <hr class="vertical dark">
             </div>
-          </div>
-        </div>
-                <div class="col-lg-3">
-          <div class="row align-items-center">
-            <div class="rotating-card-container">
-              <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-                <div class="front front-background"
-                     style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80); background-size: cover;">
-                  <div class="card-body py-7 text-center">
-                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                    <h2 class="text-white text-primary"><span id="state4" countTo={{ num_types }}>0</span>  Task type{{ num_types|pluralize }}</h2>
-                      Priorities help you prioritize tasks when
-                                          Priorities help you prioritize tasks when
-                  </div>
+            <div class="col-md-3 position-relative">
+              <a href="{% url 'home:position-list' %}">
+                <div class="p-3 text-center">
+                  <h1 class="text-gradient text-info"><span id="state4" countTo={{ num_positions }}>0</span>+</h1>
+                  <h5 class="mt-3">Position{{ num_tasks|pluralize }}</h5>
+                  <p class="text-gradient text-dark text-sm font-weight-normal">Mix the sections, change the colors and unleash your
+                    creativity</p>
                 </div>
-                <div class="back back-background"
-                     style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1365&q=80); background-size: cover;">
-                  <div class="card-body pt-7 text-center">
-                    <h3 class="text-white">Discover More</h3>
-                    <p class="text-wDesign Blockshite opacity-8"> You will save a lot of time going from prototyping to
-                      full-functional
-                      code because all elements are implemented.</p>
-                    <a href="{% url 'home:type-list' %}" class="btn btn-white btn-sm w-50 mx-auto mt-3">All task types</a>
-                  </div>
-                </div>
-              </div>
+              </a>
+              <hr class="vertical dark">
             </div>
           </div>
         </div>
