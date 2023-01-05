@@ -1,9 +1,20 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from apps.home.models import Employee, Task
+from django.utils import timezone
+
+from apps.home.models import Employee, Task, Position
 
 
-class EmployeeCreationForm(UserCreationForm):
+class BaseWidgetForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'style': 'border: 2px solid #878787;'})
+
+
+class EmployeeCreationForm(UserCreationForm, BaseWidgetForm):
 
     class Meta:
         model = Employee
@@ -16,7 +27,7 @@ class EmployeeCreationForm(UserCreationForm):
         )
 
 
-class EmployeeUpdateForm(forms.ModelForm):
+class EmployeeUpdateForm(BaseWidgetForm):
 
     class Meta:
         model = Employee
@@ -29,7 +40,13 @@ class EmployeeUpdateForm(forms.ModelForm):
         )
 
 
-class TaskCreationForm(forms.ModelForm):
+class TaskUpdateCreateForm(BaseWidgetForm):
+
+    deadline = forms.DateTimeField(widget=forms.SelectDateWidget)
+    assignees = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
 
     class Meta:
         model = Task
@@ -38,21 +55,29 @@ class TaskCreationForm(forms.ModelForm):
             "description",
             "deadline",
             "task_type",
-            "assignees"
+            "priority",
+            "assignees",
         )
 
+    def clean_deadline(self):
+        deadline = self.cleaned_data['deadline']
+        if deadline < timezone.now():
+            raise forms.ValidationError("The deadline cannot be in the past")
+        return deadline
 
-class TaskUpdateForm(forms.ModelForm):
+
+class PositionUpdateCreateForm(BaseWidgetForm):
 
     class Meta:
-        model = Task
-        fields = (
-            "name",
-            "description",
-            "deadline",
-            "task_type",
-            "assignees"
-        )
+        model = Position
+        fields = ("name",)
+
+
+class TypeUpdateCreateForm(BaseWidgetForm):
+
+    class Meta:
+        model = Position
+        fields = ("name",)
 
 
 class EmployeeSearchForm(forms.Form):

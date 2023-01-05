@@ -11,8 +11,9 @@ from apps.home.models import Task, Employee, Position, TaskType
 from apps.home.forms import (
     EmployeeCreationForm,
     EmployeeUpdateForm,
-    TaskCreationForm,
-    TaskUpdateForm,
+    TaskUpdateCreateForm,
+    PositionUpdateCreateForm,
+    TypeUpdateCreateForm,
     EmployeeSearchForm,
     TaskSearchForm,
     TypeSearchForm,
@@ -41,7 +42,7 @@ def index(request):
 class EmployeeListView(generic.ListView):
     model = Employee
     queryset = Employee.objects.all().select_related("position")
-    paginate_by = 2
+    paginate_by = 4
     template_name = "home/employee_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -85,13 +86,13 @@ class EmployeeDeleteView(generic.DeleteView):
 
 class EmployeeDetailView(generic.DetailView):
     model = Employee
-    paginate_by = 2
+    paginate_by = 4
     template_name = "home/employee_detail.html"
 
 
 class TaskListView(generic.ListView):
     model = Task
-    paginate_by = 2
+    paginate_by = 4
     queryset = Task.objects.all().select_related("task_type").prefetch_related("assignees")
     template_name = "home/task_list.html"
 
@@ -119,19 +120,19 @@ class TaskListView(generic.ListView):
 
 class TaskDetailView(generic.DetailView):
     model = Task
-    paginate_by = 2
+    paginate_by = 4
     template_name = "home/task_detail.html"
 
 
 class TaskCreateView(generic.CreateView):
     model = Task
-    form_class = TaskCreationForm
+    form_class = TaskUpdateCreateForm
     success_url = reverse_lazy("home:task-list")
 
 
 class TaskUpdateView(generic.UpdateView):
     model = Task
-    form_class = TaskUpdateForm
+    form_class = TaskUpdateCreateForm
     success_url = reverse_lazy("home:task-list")
 
 
@@ -142,7 +143,7 @@ class TaskDeleteView(generic.DeleteView):
 
 class TypeListView(generic.ListView):
     model = TaskType
-    paginate_by = 2
+    paginate_by = 4
     template_name = "home/type_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -169,13 +170,13 @@ class TypeListView(generic.ListView):
 
 class TypeCreateView(generic.CreateView):
     model = TaskType
-    fields = "__all__"
+    form_class = TypeUpdateCreateForm
     success_url = reverse_lazy("home:type-list")
 
 
 class TypeUpdateView(generic.UpdateView):
     model = TaskType
-    fields = "__all__"
+    form_class = TypeUpdateCreateForm
     success_url = reverse_lazy("home:type-list")
 
 
@@ -186,7 +187,7 @@ class TypeDeleteView(generic.DeleteView):
 
 class PositionListView(generic.ListView):
     model = Position
-    paginate_by = 2
+    paginate_by = 4
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PositionListView, self).get_context_data(**kwargs)
@@ -212,13 +213,13 @@ class PositionListView(generic.ListView):
 
 class PositionUpdateView(generic.UpdateView):
     model = Position
-    fields = "__all__"
+    form_class = PositionUpdateCreateForm
     success_url = reverse_lazy("home:position-list")
 
 
 class PositionCreateView(generic.CreateView):
     model = Position
-    fields = "__all__"
+    form_class = PositionUpdateCreateForm
     template_name = "home/position_form.html"
     success_url = reverse_lazy("home:position-list")
 

@@ -20,40 +20,39 @@
           </button>
           <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
             <ul class="navbar-nav navbar-nav-hover mx-auto">
-<li class="nav-item dropdown dropdown-hover mx-2">
-  <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-      aria-expanded="false" href="{% url 'home:employee-list' %}">
-    <i class="material-icons opacity-6 me-2 text-md">view_day</i>
-    Employee{{ num_employees|pluralize }}
-  </a>
-</li>
-<li class="nav-item dropdown dropdown-hover mx-2">
-  <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-      aria-expanded="false" href="{% url 'home:task-list' %}">
-    <i class="material-icons opacity-6 me-2 text-md">view_day</i>
-    Task{{ num_tasks|pluralize }}
-  </a>
-</li>
-<li class="nav-item dropdown dropdown-hover mx-2">
-  <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-      aria-expanded="false" href="{% url 'home:type-list' %}">
-    <i class="material-icons opacity-6 me-2 text-md">view_day</i>
-    Task type{{ num_positions|pluralize }}
-  </a>
-</li>
-<li class="nav-item dropdown dropdown-hover mx-2">
-  <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-      aria-expanded="false" href="{% url 'home:position-list' %}">
-    <i class="material-icons opacity-6 me-2 text-md">view_day</i>
-    Position{{ num_tasks|pluralize }}
-  </a>
-</li>
-
-            {% if request.user.is_authenticated %}
-              <li class="nav-item my-auto ms-3 ms-lg-0">
-                <a href="{% url 'home:employee-detail' pk=request.user.id %}" target="_blank"
-                   class="d-inline text-sm z-index-1 font-weight-bold">Hi, {{ request.user.username}}</a>
+              <li class="nav-item dropdown dropdown-hover mx-2">
+                <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+                   aria-expanded="false" href="{% url 'home:employee-list' %}">
+                  <i class="material-icons opacity-6 me-2 text-md">view_day</i>
+                  Employee{{ num_employees|pluralize }}
+                </a>
               </li>
+              <li class="nav-item dropdown dropdown-hover mx-2">
+                <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+                   aria-expanded="false" href="{% url 'home:task-list' %}">
+                  <i class="material-icons opacity-6 me-2 text-md">view_day</i>
+                  Task{{ num_tasks|pluralize }}
+                </a>
+              </li>
+              <li class="nav-item dropdown dropdown-hover mx-2">
+                <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+                   aria-expanded="false" href="{% url 'home:type-list' %}">
+                  <i class="material-icons opacity-6 me-2 text-md">view_day</i>
+                  Task type{{ num_positions|pluralize }}
+                </a>
+              </li>
+              <li class="nav-item dropdown dropdown-hover mx-2">
+                <a class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+                   aria-expanded="false" href="{% url 'home:position-list' %}">
+                  <i class="material-icons opacity-6 me-2 text-md">view_day</i>
+                  Position{{ num_tasks|pluralize }}
+                </a>
+              </li>
+              {% if request.user.is_authenticated %}
+                <li class="nav-item my-auto ms-3 ms-lg-0">
+                  <a href="{% url 'home:employee-detail' pk=request.user.id %}" target="_blank"
+                     class="d-inline text-sm z-index-1 font-weight-bold">Hi, {{ request.user.username }}</a>
+                </li>
                 <li class="nav-item ms-lg-auto">
                   <a class="nav-link nav-link-icon me-2"
                      href="{% url 'logout' %}">
