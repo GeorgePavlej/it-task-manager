@@ -27,7 +27,7 @@
         <tr>
           <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Employee</th>
           <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Position</th>
-          <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Task type</th>
+          <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Task assigned</th>
           <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Progress</th>
           <th class="text-secondary opacity-7"></th>
         </tr>
@@ -39,7 +39,12 @@
               <a href="{% url 'home:employee-detail' pk=employee.pk %}">
                 <div class="d-flex px-2 py-1">
                   <div>
-                    <img src="{{ ASSETS_ROOT }}/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                    {% if employee.image %}
+                      <img src="{{ employee.image.url }}" class="avatar avatar-sm me-3" alt="image">
+                    {% else %}
+                      <img src="{{ ASSETS_ROOT }}/img/team-4.jpg"
+                           class="avatar avatar-sm me-3" alt="user1">
+                    {% endif %}
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">{{ employee.first_name }} {{ employee.last_name }}</h6>
@@ -52,8 +57,7 @@
               <p class="text-xs font-weight-bold mb-0">{{ employee.position }}</p>
             </td>
             <td class="align-middle text-center text-sm">
-                <span class="badge badge-sm bg-gradient-success">
-                  {{ employee.tasks }}</span>
+              <p class="text-xs font-weight-bold mb-0">{{ employee.tasks.count }}</p>
             </td>
             <td class="align-middle text-center">
               <div class="d-flex align-items-center justify-content-center">

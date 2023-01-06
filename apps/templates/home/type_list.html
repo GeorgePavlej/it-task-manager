@@ -35,7 +35,7 @@
           {% for type in tasktype_list %}
             <tr>
               <td>
-                <p class="text-xs font-weight-bold mb-0">{{ type.name }}</p>
+                        <h6 class="mb-0 text-sm">{{ type.name }}</h6>
               </td>
               <td class="align-middle text-center text-sm">
                 <a href="{% url 'home:type-update' pk=type.pk %}"

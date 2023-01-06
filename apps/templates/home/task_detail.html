@@ -63,28 +63,27 @@
         <h2>Assigned to :</h2>
       </div>
       <br>
-        <div class="row mt-5 text-center">
-          <div class="col-12">
-            <div class="avatar-group">
-              <a href="javascript:;" class="avatar avatar-xxl rounded-circle" data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" title="Viktoria Pavlej">
-                <img alt="Image placeholder" src="{{ ASSETS_ROOT }}/img/viktoria.jpg">">
-              </a>
-              <a href="javascript:;" class="avatar avatar-xxl rounded-circle" data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" title="George Pavlej">
-                <img alt="Image placeholder" src="{{ ASSETS_ROOT }}/img/george.png">
-              </a>
-              <a href="javascript:;" class="avatar avatar-xxl rounded-circle" data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" title="Alexander Smith">
-                <img alt="Image placeholder" src="https://appsrv1-147a1.kxcdn.com/material-kit2/img/team-3.jpg">
-              </a>
-              <a href="javascript:;" class="avatar avatar-xxl rounded-circle" data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" title="Jessica Doe">
-                <img alt="Image placeholder" src="https://appsrv1-147a1.kxcdn.com/material-kit2/img/team-4.jpg">
-              </a>
-            </div>
+      <div class="row mt-5 text-center">
+        <div class="col-12">
+          <div class="avatar-group mt-2">
+            {% for employee in task.assignees.all %}
+              {% if employee.image %}
+                <a href="{% url 'home:employee-detail' pk=employee.pk %}" class="avatar avatar-xxl rounded-circle"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom" title="{{ employee.first_name }} {{ employee.last_name }}">
+                  <img alt="Image placeholder" src="{{ employee.image.url }}">
+                </a>
+              {% else %}
+                <a href="{% url 'home:employee-detail' pk=employee.pk %}" class="avatar avatar-xxl rounded-circle"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom" title="{{ employee.first_name }} {{ employee.last_name }}">
+                  <img alt="Image placeholder" src="{{ ASSETS_ROOT }}/img/bg0.png">
+                </a>
+              {% endif %}
+            {% endfor %}
           </div>
         </div>
+      </div>
 
     </section>
     <!-- END Testimonials w/ user image & text & info -->

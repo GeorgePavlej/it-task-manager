@@ -3,7 +3,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.utils import timezone
 
-from apps.home.models import Employee, Task, Position
+from apps.home.models import (
+    Employee,
+    Task,
+    Position,
+    TaskType,
+)
 
 
 class BaseWidgetForm(forms.ModelForm):
@@ -24,6 +29,7 @@ class EmployeeCreationForm(UserCreationForm, BaseWidgetForm):
             "last_name",
             "email",
             "position",
+            "image",
         )
 
 
@@ -37,6 +43,7 @@ class EmployeeUpdateForm(BaseWidgetForm):
             "last_name",
             "email",
             "position",
+            "image",
         )
 
 
@@ -50,14 +57,7 @@ class TaskUpdateCreateForm(BaseWidgetForm):
 
     class Meta:
         model = Task
-        fields = (
-            "name",
-            "description",
-            "deadline",
-            "task_type",
-            "priority",
-            "assignees",
-        )
+        fields = "__all__"
 
     def clean_deadline(self):
         deadline = self.cleaned_data['deadline']
@@ -76,7 +76,7 @@ class PositionUpdateCreateForm(BaseWidgetForm):
 class TypeUpdateCreateForm(BaseWidgetForm):
 
     class Meta:
-        model = Position
+        model = TaskType
         fields = ("name",)
 
 

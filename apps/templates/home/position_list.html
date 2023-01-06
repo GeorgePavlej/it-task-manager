@@ -35,7 +35,7 @@
           {% for position in position_list %}
             <tr>
               <td>
-                <p class="text-xs font-weight-bold mb-0">{{ position }}</p>
+                <h6 class="mb-0 text-sm">{{ position.name }}</h6>
               </td>
               <td class="align-middle text-center text-sm">
                 <a href="{% url 'home:position-update' pk=position.pk %}"
