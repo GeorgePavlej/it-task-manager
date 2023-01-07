@@ -10,7 +10,7 @@
 
     <form action="" method="get" class="form-inline">
       {{ search_form|crispy }}
-      <input class="btn" style="background-color: bisque" type="submit" value="Search">
+      <input class="btn btn-sm" style="background-color: bisque" type="submit" value="Search">
     </form>
 
     <div class="row">
@@ -59,7 +59,8 @@
                 </td>
                 <td class="align-middle text-center text-sm">
                   <a>
-                    {% if task.is_completed %} Done {% else %} Not done {% endif %}</a>
+                    {% if task.is_completed %} Done {% else %} Not done {% endif %}
+                  </a>
                 </td>
                 <td class="align-middle text-center">
                   <div class="col-12">
@@ -69,7 +70,7 @@
                           <a href="{% url 'home:employee-detail' pk=employee.pk %}"
                              class="avatar avatar-sm rounded-circle" data-bs-toggle="tooltip"
                              data-bs-placement="bottom" title="{{ employee.first_name }} {{ employee.last_name }}">
-                            <img alt="Image placeholder" src="{{ ASSETS_ROOT }}/img/viktoria.jpg">
+                            <img alt="Image placeholder" src="{{ employee.image.url }}">
                           </a>
                         {% else %}
                           <a href="{% url 'home:employee-detail' pk=employee.pk %}"

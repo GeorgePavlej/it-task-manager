@@ -27,7 +27,7 @@ class Employee(AbstractUser):
     image = models.ImageField(
         blank=True,
         null=True,
-        upload_to="photo/",
+        upload_to=create_upload_path,
     )
     position = models.ForeignKey(
         Position,
