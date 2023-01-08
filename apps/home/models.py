@@ -78,13 +78,13 @@ class Task(models.Model):
         (3, "Urgent"),
     ]
 
-    priority = models.IntegerField(
+    priority = models.PositiveSmallIntegerField(
         choices=PRIORITY_CHOICES,
         default=2
     )
 
     name = models.CharField(max_length=255)
-    description = models.TextField(max_length=255)
+    description = models.TextField(blank=True)
     deadline = models.DateTimeField(blank=True, null=True)
     is_completed = models.BooleanField(default=False)
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
