@@ -240,9 +240,7 @@ def task_status(request, pk, pk2):
 @login_required
 def employee_assign_to_task(request, pk):
     employee = Employee.objects.get(id=request.user.id)
-    if (
-        Task.objects.get(id=pk) in employee.tasks.all()
-    ):
+    if Task.objects.get(id=pk) in employee.tasks.all():
         employee.tasks.remove(pk)
     else:
         employee.tasks.add(pk)

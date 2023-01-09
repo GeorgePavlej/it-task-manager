@@ -61,6 +61,16 @@
       <br>
       <div class="row">
         <h2>Assigned to :</h2>
+          {% if employee in task.assignees.all %}
+          <a href="{% url 'home:employee-task-assign' pk=task.id %}" class="btn btn-danger btn-sm link-to-page">
+            Delete me from this task
+          </a>
+            {% endif %}
+        {% if not employee in task.assignees.all %}
+          <a href="{% url 'home:employee-task-assign' pk=task.id %}" class="btn btn-success btn-sm link-to-page">
+            Assign me to this task
+          </a>
+        {% endif %}
       </div>
       <br>
       <div class="row mt-5 text-center">
