@@ -86,7 +86,7 @@ class EmployeeSearchForm(forms.Form):
         required=False,
         label="",
         widget=forms.TextInput(
-            attrs={"placeholder": "Search by first username"}
+            attrs={"placeholder": "Search by username"}
         )
     )
 

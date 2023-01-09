@@ -1,8 +1,7 @@
-from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.test import TestCase
-from django.utils import timezone
 
+from apps.home.models import Position, Employee, Task, TaskType
 from apps.home.forms import (
     EmployeeCreationForm,
     TaskUpdateCreateForm,
@@ -10,7 +9,6 @@ from apps.home.forms import (
     TypeUpdateCreateForm,
     BaseWidgetForm,
 )
-from apps.home.models import Position, Employee, Task, TaskType
 
 
 class EmployeeCreationFormTests(TestCase):

@@ -19,7 +19,7 @@ from apps.home.views import (
     PositionUpdateView,
     PositionCreateView,
     PositionDeleteView,
-    task_status,
+    task_status, employee_assign_to_task,
 )
 
 urlpatterns = [
@@ -85,6 +85,10 @@ urlpatterns = [
         TaskDeleteView.as_view(),
         name="task-delete"
     ),
+    path("tasks/<int:pk>/employee-assign/",
+         employee_assign_to_task,
+         name="employee-task-assign"
+         ),
 
     # Task Type List
     path(

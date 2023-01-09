@@ -39,7 +39,7 @@ def index(request):
     return HttpResponse(html_template.render(context, request))
 
 
-class EmployeeListView(generic.ListView):
+class EmployeeListView(LoginRequiredMixin, generic.ListView):
     model = Employee
     queryset = Employee.objects.all().select_related("position")
     paginate_by = 4
@@ -235,6 +235,18 @@ def task_status(request, pk, pk2):
     task.is_completed = not task.is_completed
     task.save()
     return redirect("home:employee-detail", pk=pk2)
+
+
+@login_required
+def employee_assign_to_task(request, pk):
+    employee = Employee.objects.get(id=request.user.id)
+    if (
+        Task.objects.get(id=pk) in employee.tasks.all()
+    ):
+        employee.tasks.remove(pk)
+    else:
+        employee.tasks.add(pk)
+    return HttpResponseRedirect(reverse_lazy("home:task-detail", args=[pk]))
 
 
 @login_required(login_url="/login/")
