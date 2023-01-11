@@ -1,4 +1,5 @@
 import os
+from typing import Type
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -11,7 +12,7 @@ class Position(models.Model):
         return self.name
 
 
-def create_upload_path(instance, filename):
+def create_upload_path(instance: Type, filename: str) -> str:
     # Create a path for the file using the model name and the original filename
     path = f"{instance.__class__.__name__}/{filename}"
 
@@ -41,7 +42,7 @@ class Employee(AbstractUser):
         verbose_name_plural = "employees"
 
     @property
-    def calc_progress(self):
+    def calc_progress(self) -> int:
         tasks = self.tasks.all()
         assigned_tasks = self.tasks.count()
         counter_tasks = 0

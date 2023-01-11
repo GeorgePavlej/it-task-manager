@@ -61,15 +61,18 @@
       <br>
       <div class="row">
         <h2>Assigned to :</h2>
-          {% if employee in task.assignees.all %}
-          <a href="{% url 'home:employee-task-assign' pk=task.id %}" class="btn btn-danger btn-sm link-to-page">
-            Delete me from this task
-          </a>
-            {% endif %}
-        {% if not employee in task.assignees.all %}
-          <a href="{% url 'home:employee-task-assign' pk=task.id %}" class="btn btn-success btn-sm link-to-page">
-            Assign me to this task
-          </a>
+        {% if user in task.assignees.all %}
+          <div>
+            <a href="{% url 'home:employee-task-assign' pk=task.id %}" class="btn btn-danger btn-sm link-to-page">
+              Delete me from this task
+            </a>
+          </div>
+            {% else %}
+            <div>
+            <a href="{% url 'home:employee-task-assign' pk=task.id %}" class="btn btn-success btn-sm link-to-page">
+              Assign me to this task
+            </a>
+          </div>
         {% endif %}
       </div>
       <br>
@@ -87,7 +90,7 @@
                 <a href="{% url 'home:employee-detail' pk=employee.pk %}" class="avatar avatar-xxl rounded-circle"
                    data-bs-toggle="tooltip"
                    data-bs-placement="bottom" title="{{ employee.first_name }} {{ employee.last_name }}">
-                  <img alt="Image placeholder" src="{{ ASSETS_ROOT }}/img/bg0.png">
+                  <img alt="Image placeholder" src="{{ ASSETS_ROOT }}/img/default-avatar.png">
                 </a>
               {% endif %}
             {% endfor %}
