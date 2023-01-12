@@ -6,5 +6,3 @@ admin.site.register(Employee)
 admin.site.register(Task)
 admin.site.register(TaskType)
 admin.site.register(Position)
-
-
