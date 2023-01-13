@@ -1,6 +1,7 @@
 import environ
 import os
 import dj_database_url
+from django.template.context_processors import media
 
 env = environ.Env(
     # set casting, default value
@@ -36,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apps.home",
+    "storages",
+    "dropbox",
     "crispy_bootstrap5",
     "crispy_forms",
 ]
@@ -136,14 +139,21 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(CORE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = "photo/"
-MEDIA_URL = "/photo/"
+MEDIA_ROOT = "media/"
+MEDIA_URL = "/media/"
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
+
+DEFAULT_FILE_STORAGE = os.environ.get("DEFAULT_FILE_STORAGE", "django.core.files.storage.FileSystemStorage")
+DROPBOX_OAUTH2_TOKEN = os.environ.get("DROPBOX_OAUTH2_TOKEN")
+DROPBOX_APP_KEY = os.environ.get("DROPBOX_APP_KEY")
+DROPBOX_APP_SECRET = os.environ.get("DROPBOX_APP_SECRET")
+DROPBOX_OAUTH2_REFRESH_TOKEN = os.environ.get("DROPBOX_OAUTH2_REFRESH_TOKEN")
+DROPBOX_ROOT_PATH = "/"
 
 #############################################################
 #############################################################
