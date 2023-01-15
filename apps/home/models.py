@@ -25,7 +25,7 @@ def create_upload_path(instance: Type, filename: str) -> str:
 
 
 class Employee(AbstractUser):
-    picture_url = models.ImageField(
+    image = models.ImageField(
         blank=True,
         null=True,
         upload_to=create_upload_path,

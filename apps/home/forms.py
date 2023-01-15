@@ -29,7 +29,7 @@ class EmployeeCreationForm(UserCreationForm, BaseWidgetForm):
             "last_name",
             "email",
             "position",
-            "picture_url",
+            "image",
         )
 
 
@@ -43,7 +43,7 @@ class EmployeeUpdateForm(BaseWidgetForm):
             "last_name",
             "email",
             "position",
-            "picture_url",
+            "image",
         )
 
 

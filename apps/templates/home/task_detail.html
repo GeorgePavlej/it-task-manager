@@ -80,11 +80,11 @@
         <div class="col-12">
           <div class="avatar-group mt-2">
             {% for employee in task.assignees.all %}
-              {% if employee.picture_url %}
+              {% if employee.image %}
                 <a href="{% url 'home:employee-detail' pk=employee.pk %}" class="avatar avatar-xxl rounded-circle"
                    data-bs-toggle="tooltip"
                    data-bs-placement="bottom" title="{{ employee.first_name }} {{ employee.last_name }}">
-                  <img alt="Image placeholder" src="{{ MEDIA_URL }}{{ employee.picture_url.url }}">
+                  <img alt="Image placeholder" src="{{ MEDIA_URL }}{{ employee.image.url }}">
                 </a>
               {% else %}
                 <a href="{% url 'home:employee-detail' pk=employee.pk %}" class="avatar avatar-xxl rounded-circle"

@@ -23,9 +23,9 @@
                 <div class="row">
                     <div class="col-12 mx-auto">
                         <div class="mt-n8 mt-md-n9 text-center">
-                            {% if employee.picture_url %}
+                            {% if employee.image %}
                                 <img class="avatar avatar-xxl shadow-xl position-relative z-index-2"
-                                     src="{{ MEDIA_URL }}{{ employee.picture_url.url }}" alt="bruce" loading="lazy">
+                                     src="{{ MEDIA_URL }}{{ employee.image.url }}" alt="bruce" loading="lazy">
                             {% else %}
                                 <img class="avatar avatar-xxl shadow-xl position-relative z-index-2"
                                      src="{{ ASSETS_ROOT }}/img/default-avatar.png" alt="bruce" loading="lazy">
