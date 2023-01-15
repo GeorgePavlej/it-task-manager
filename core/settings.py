@@ -1,7 +1,7 @@
 import environ
 import os
+import storages
 import dj_database_url
-from django.template.context_processors import media
 
 env = environ.Env(
     # set casting, default value
@@ -147,7 +147,7 @@ STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_FILE_STORAGE = os.environ.get("DEFAULT_FILE_STORAGE", "django.core.files.storage.FileSystemStorage")
 DROPBOX_OAUTH2_TOKEN = os.environ.get("DROPBOX_OAUTH2_TOKEN")
 DROPBOX_APP_KEY = os.environ.get("DROPBOX_APP_KEY")
