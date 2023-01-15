@@ -40,7 +40,7 @@
                 <div class="d-flex px-2 py-1">
                   <div>
                     {% if employee.picture_url %}
-                      <img src="{{ employee.picture_url.url }}" class="avatar avatar-sm me-3" alt="image">
+                      <img src="{{ MEDIA_URL }}{{ employee.picture_url.url }}" class="avatar avatar-sm me-3" alt="image">
                     {% else %}
                       <img src="{{ ASSETS_ROOT }}/img/team-4.jpg"
                            class="avatar avatar-sm me-3" alt="user1">
