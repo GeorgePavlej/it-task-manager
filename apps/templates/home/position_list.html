@@ -2,68 +2,86 @@
 {% load crispy_forms_filters %}
 
 
+{% block title %} Position list {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
 {% block content %}
 
-  <div style="margin-top: 120px; position: relative" class="container-fluid py-4">
-    <a style="position: absolute;top: 40px; right: 40px; z-index: 1" href="{% url 'home:position-create' %}"
-       class="btn btn-sm btn-outline-info text-nowrap mb-0">Create</a>
-
-    <form action="" method="get" class="form-inline">
-      {{ search_form|crispy }}
-      <input class="btn btn-sm" style="background-color: bisque" type="submit" value="Search">
-    </form>
-
-    <div class="row">
-      {% if position_list %}
-        <div class="col-12">
-        <div class="card mb-4">
-        <div class="card-header pb-0">
-          <h6>Positions table</h6>
+    <header>
+        <div class="page-header min-height-400" style="background-image: url('{{ ASSETS_ROOT }}/img/city-profile.jpg');"
+             loading="lazy">
+            <span class="mask bg-gradient-dark opacity-8"></span>
         </div>
-        <div class="card-body px-0 pt-0 pb-2">
-        <div class="table-responsive p-0">
-        <table class="table align-items-center mb-0">
-          <thead>
-          <tr>
-            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Employee</th>
-            <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Update</th>
-            <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Delete</th>
-            <th class="text-secondary opacity-7"></th>
-          </tr>
-          </thead>
-          <tbody>
-          {% for position in position_list %}
-            <tr>
-              <td>
-                <h6 class="mb-0 text-sm">{{ position.name }}</h6>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <a href="{% url 'home:position-update' pk=position.pk %}"
-                   class="btn btn-sm btn-outline-secondary text-nowrap mb-0">Update</a>
-              </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <a href="{% url 'home:position-delete' pk=position.pk %}"
-                     class="btn btn-sm btn-outline-danger text-nowrap mb-0">Delete</a>
-                  <div>
-                  </div>
+    </header>
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n10 mb-4">
+
+        <div style="margin-top: 10px; position: relative" class="container-fluid py-4">
+            <a style="position: absolute;top: 40px; right: 40px; z-index: 1" href="{% url 'home:position-create' %}"
+               class="btn btn-sm btn-outline-info text-nowrap mb-0">Create</a>
+
+            <form action="" method="get" class="form-inline">
+                {{ search_form|crispy }}
+                <input class="btn btn-sm" style="background-color: bisque" type="submit" value="Search">
+            </form>
+
+            <div class="row">
+                {% if position_list %}
+                    <div class="col-12">
+                    <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6>Positions table</h6>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Employee</th>
+                            <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                Update
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                Delete
+                            </th>
+                            <th class="text-secondary opacity-7"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for position in position_list %}
+                            <tr>
+                                <td>
+                                    <h6 class="mb-0 text-sm">{{ position.name }}</h6>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <a href="{% url 'home:position-update' pk=position.pk %}"
+                                       class="btn btn-sm btn-outline-secondary text-nowrap mb-0">Update</a>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <a href="{% url 'home:position-delete' pk=position.pk %}"
+                                           class="btn btn-sm btn-outline-danger text-nowrap mb-0">Delete</a>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p>There are no positions in the list.</p>
+                {% endif %}
                 </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-            </tbody>
-          {% endfor %}
-        </table>
-      {% else %}
-        <p>There are no positions in the list.</p>
-      {% endif %}
-      </div>
-      </div>
-      </div>
-      </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
 {% endblock content %}
 
