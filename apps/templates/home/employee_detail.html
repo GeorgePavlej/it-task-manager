@@ -84,7 +84,7 @@
                                 Status
                             </th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Change
+                                Change Status
                             </th>
                             <th class="text-secondary opacity-7"></th>
                         </tr>
@@ -132,7 +132,7 @@
                                 {% if task.is_completed %}
                                     <td class="align-middle text-center">
                                         <a type="button" href="{% url 'home:task-status' pk=task.id pk2=employee.id %}"
-                                           class="badge badge-sm bg-gradient-secondary float-right">Change</a>
+                                           class="badge badge-sm bg-gradient-secondary float-right">Undo</a>
                                     </td>
                                 {% else %}
                                     <td class="align-middle text-center">
