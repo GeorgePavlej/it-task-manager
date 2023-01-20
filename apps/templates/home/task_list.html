@@ -25,6 +25,7 @@
             <div class="row">
                 <form action="" method="get" class="form-inline">
                     {{ search_form|crispy }}
+                    <hr style="width: 130px">
                     <input class="btn btn-sm" style="background-color: bisque" type="submit" value="Search">
                 </form>
             </div>
@@ -119,15 +120,15 @@
                                 <a>{{ task.deadline|date:"Y-m-d" }}</a>
                             </td>
                             {% if user.id == 7 %}
-                                                        <td class="align-middle text-center">
-                                                            <div class="d-flex align-items-center justify-content-center">
-                                                                <a href="{% url 'home:task-delete' pk=task.pk %}"
-                                                                   class="btn btn-sm btn-outline-danger text-nowrap mb-0">Delete</a>
-                                                                <div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    {% endif %}
+                                <td class="align-middle text-center">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <a href="{% url 'home:task-delete' pk=task.pk %}"
+                                           class="btn btn-sm btn-outline-danger text-nowrap mb-0">Delete</a>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </td>
+                            {% endif %}
                             </tr>
                             <tr>
                             <td>
