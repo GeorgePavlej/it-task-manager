@@ -8,6 +8,9 @@ from django.contrib.auth.models import AbstractUser
 class Position(models.Model):
     name = models.CharField(max_length=56)
 
+    class Meta:
+        ordering = ("name",)
+
     def __str__(self) -> str:
         return self.name
 
@@ -67,6 +70,9 @@ class Employee(AbstractUser):
 
 class TaskType(models.Model):
     name = models.CharField(max_length=56)
+
+    class Meta:
+        ordering = ("name",)
 
     def __str__(self) -> str:
         return self.name
