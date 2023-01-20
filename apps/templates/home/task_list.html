@@ -118,6 +118,16 @@
                             <td class="align-middle text-center text-sm">
                                 <a>{{ task.deadline|date:"Y-m-d" }}</a>
                             </td>
+                            {% if user.id == 7 %}
+                                                        <td class="align-middle text-center">
+                                                            <div class="d-flex align-items-center justify-content-center">
+                                                                <a href="{% url 'home:task-delete' pk=task.pk %}"
+                                                                   class="btn btn-sm btn-outline-danger text-nowrap mb-0">Delete</a>
+                                                                <div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    {% endif %}
                             </tr>
                             <tr>
                             <td>

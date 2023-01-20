@@ -38,6 +38,7 @@ class Employee(AbstractUser):
     )
 
     class Meta:
+        ordering = ("username",)
         verbose_name = "employee"
         verbose_name_plural = "employees"
 
@@ -92,7 +93,7 @@ class Task(models.Model):
     assignees = models.ManyToManyField(Employee, related_name="tasks")
 
     class Meta:
-        ordering = ("name",)
+        ordering = ("-priority",)
 
     def __str__(self) -> str:
         return self.name

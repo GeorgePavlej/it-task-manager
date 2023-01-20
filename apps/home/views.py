@@ -42,7 +42,7 @@ def index(request):
 class EmployeeListView(LoginRequiredMixin, generic.ListView):
     model = Employee
     queryset = Employee.objects.all().select_related("position")
-    paginate_by = 4
+    paginate_by = 5
     template_name = "home/employee_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -86,14 +86,14 @@ class EmployeeDeleteView(generic.DeleteView):
 
 class EmployeeDetailView(generic.DetailView):
     model = Employee
-    paginate_by = 4
+    paginate_by = 5
     template_name = "home/employee_detail.html"
 
 
 class TaskListView(generic.ListView):
     model = Task
     queryset = Task.objects.all().select_related("task_type").prefetch_related("assignees")
-    paginate_by = 4
+    paginate_by = 5
     template_name = "home/task_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -120,7 +120,7 @@ class TaskListView(generic.ListView):
 
 class TaskDetailView(generic.DetailView):
     model = Task
-    paginate_by = 4
+    paginate_by = 5
     template_name = "home/task_detail.html"
 
 
@@ -143,7 +143,7 @@ class TaskDeleteView(generic.DeleteView):
 
 class TypeListView(generic.ListView):
     model = TaskType
-    paginate_by = 4
+    paginate_by = 5
     template_name = "home/type_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -187,7 +187,7 @@ class TypeDeleteView(generic.DeleteView):
 
 class PositionListView(generic.ListView):
     model = Position
-    paginate_by = 4
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PositionListView, self).get_context_data(**kwargs)

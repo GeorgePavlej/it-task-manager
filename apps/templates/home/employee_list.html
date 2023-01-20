@@ -17,106 +17,123 @@
     </header>
 
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n10 mb-4">
-    <div style="margin-top: 10px; position: relative" class="container-fluid py-4">
-        <a style="position: absolute;top: 40px; right: 40px; z-index: 1" href="{% url 'home:employee-create' %}"
-           class="btn btn-sm btn-outline-info text-nowrap mb-0">Create</a>
+        <div style="margin-top: 10px; position: relative" class="container-fluid py-4">
+            <a style="position: absolute;top: 40px; right: 40px; z-index: 1" href="{% url 'home:employee-create' %}"
+               class="btn btn-sm btn-outline-info text-nowrap mb-0">Create</a>
 
-        <form action="" method="get" class="form-inline">
-            {{ search_form|crispy }}
-            <input class="btn btn-sm" style="background-color: bisque" type="submit" value="Search">
-        </form>
+            <form action="" method="get" class="form-inline">
+                {{ search_form|crispy }}
+                <input class="btn btn-sm" style="background-color: bisque" type="submit" value="Search">
+            </form>
 
-        <div class="row">
-            {% if employee_list %}
-                <div class="col-12">
-                <div class="card mb-4">
-                <div class="card-header pb-0">
-                    <h6>Employees table</h6>
+            <div class="row">
+                {% if employee_list %}
+                    <div class="col-12">
+                    <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6>Employees table</h6>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                        Employee
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                                        Position
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                        Task
+                                        assigned
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                        Progress
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for employee in employee_list %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'home:employee-detail' pk=employee.pk %}">
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        {% if employee.image %}
+                                                            <img src="{{ MEDIA_URL }}{{ employee.image.url }}"
+                                                                 class="avatar avatar-sm me-3" alt="image">
+                                                        {% else %}
+                                                            <img src="{{ ASSETS_ROOT }}/img/team-4.jpg"
+                                                                 class="avatar avatar-sm me-3" alt="user1">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ employee.first_name }} {{ employee.last_name }}</h6>
+                                                        <p class="text-xs text-secondary mb-0">{{ employee.username }}</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ employee.position }}</p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <p class="text-xs font-weight-bold mb-0">{{ employee.tasks.count }}</p>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="me-2 text-xs font-weight-bold">{{ employee.calc_progress }} %</span>
+                                                <div>
+                                                    <div class="progress">
+                                                        {% if employee.calc_progress <= 33 %}
+                                                            <div class="progress-bar bg-gradient-danger"
+                                                                 role="progressbar"
+                                                                 aria-valuenow="60"
+                                                                 aria-valuemin="0" aria-valuemax="100"
+                                                                 style="width: {{ employee.calc_progress }}%;"></div>
+                                                        {% elif employee.calc_progress <= 50 %}
+                                                            <div class="progress-bar bg-gradient-warning"
+                                                                 role="progressbar"
+                                                                 aria-valuenow="60"
+                                                                 aria-valuemin="0" aria-valuemax="100"
+                                                                 style="width: {{ employee.calc_progress }}%;"></div>
+                                                        {% else %}
+                                                            <div class="progress-bar bg-gradient-success"
+                                                                 role="progressbar"
+                                                                 aria-valuenow="60"
+                                                                 aria-valuemin="0" aria-valuemax="100"
+                                                                 style="width: {{ employee.calc_progress }}%;"></div>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% if user.id == 7 %}
+                                                        <td class="align-middle text-center">
+                                                            <div class="d-flex align-items-center justify-content-center">
+                                                                <a href="{% url 'home:employee-delete' pk=employee.pk %}"
+                                                                   class="btn btn-sm btn-outline-danger text-nowrap mb-0">Delete</a>
+                                                                <div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    {% endif %}
+                                    </div>
+                                    </div>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                    <td>
+                                    </tbody>
+                                {% endfor %}
+                    </table>
+                {% else %}
+                    <p>There are no employee in the list.</p>
+                {% endif %}
                 </div>
-                <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                    <thead>
-                    <tr>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Employee</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Position
-                        </th>
-                        <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Task
-                            assigned
-                        </th>
-                        <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Progress
-                        </th>
-                        <th class="text-secondary opacity-7"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for employee in employee_list %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'home:employee-detail' pk=employee.pk %}">
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            {% if employee.image %}
-                                                <img src="{{ MEDIA_URL }}{{ employee.image.url }}"
-                                                     class="avatar avatar-sm me-3" alt="image">
-                                            {% else %}
-                                                <img src="{{ ASSETS_ROOT }}/img/team-4.jpg"
-                                                     class="avatar avatar-sm me-3" alt="user1">
-                                            {% endif %}
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ employee.first_name }} {{ employee.last_name }}</h6>
-                                            <p class="text-xs text-secondary mb-0">{{ employee.username }}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </td>
-                            <td>
-                                <p class="text-xs font-weight-bold mb-0">{{ employee.position }}</p>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-xs font-weight-bold mb-0">{{ employee.tasks.count }}</p>
-                            </td>
-                            <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <span class="me-2 text-xs font-weight-bold">{{ employee.calc_progress }} %</span>
-                                    <div>
-                                        <div class="progress">
-                                            {% if employee.calc_progress <= 33 %}
-                                                <div class="progress-bar bg-gradient-danger" role="progressbar"
-                                                     aria-valuenow="60"
-                                                     aria-valuemin="0" aria-valuemax="100"
-                                                     style="width: {{ employee.calc_progress }}%;"></div>
-                                            {% elif employee.calc_progress <= 50 %}
-                                                <div class="progress-bar bg-gradient-warning" role="progressbar"
-                                                     aria-valuenow="60"
-                                                     aria-valuemin="0" aria-valuemax="100"
-                                                     style="width: {{ employee.calc_progress }}%;"></div>
-                                            {% else %}
-                                                <div class="progress-bar bg-gradient-success" role="progressbar"
-                                                     aria-valuenow="60"
-                                                     aria-valuemin="0" aria-valuemax="100"
-                                                     style="width: {{ employee.calc_progress }}%;"></div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                        </tbody>
-                    {% endfor %}
-                </table>
-            {% else %}
-                <p>There are no employee in the list.</p>
-            {% endif %}
-            </div>
-            </div>
-            </div>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock content %}
 
