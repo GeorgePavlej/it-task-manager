@@ -19,7 +19,7 @@ class EmployeeSearchTests(TestCase):
         )
         self.assertEqual(
             list(response.context["employee_list"]),
-            list(Employee.objects.filter(username__icontains="test_user"))
+            list(Employee.objects.filter(username__icontains="test_user")),
         )
 
     def test_form_valid_with_blank_username(self):

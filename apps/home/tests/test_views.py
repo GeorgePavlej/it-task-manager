@@ -35,10 +35,7 @@ class PrivateEmployeeTests(TestCase):
         employee = Employee.objects.all()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            list(response.context["employee_list"]),
-            list(employee)
-        )
+        self.assertEqual(list(response.context["employee_list"]), list(employee))
 
         self.assertTemplateUsed(response, "home/employee_list.html")
 
@@ -68,10 +65,7 @@ class PrivatePositionTest(TestCase):
         positions = Position.objects.all()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            list(response.context["position_list"]),
-            list(positions)
-        )
+        self.assertEqual(list(response.context["position_list"]), list(positions))
 
         self.assertTemplateUsed(response, "home/position_list.html")
 
@@ -101,10 +95,7 @@ class PublicTaskTypeTests(TestCase):
         task_types = TaskType.objects.all()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            list(response.context["tasktype_list"]),
-            list(task_types)
-        )
+        self.assertEqual(list(response.context["tasktype_list"]), list(task_types))
 
         self.assertTemplateUsed(response, "home/type_list.html")
 
@@ -126,19 +117,13 @@ class PublicTaskTest(TestCase):
         self.client.force_login(self.user)
 
     def test_retrieve_task(self) -> None:
-        Task.objects.create(
-            name="Test name",
-            task_type=self.task_type
-        )
+        Task.objects.create(name="Test name", task_type=self.task_type)
 
         response = self.client.get(TASK_URL)
 
         tasks = Task.objects.all()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            list(response.context["task_list"]),
-            list(tasks)
-        )
+        self.assertEqual(list(response.context["task_list"]), list(tasks))
 
         self.assertTemplateUsed(response, "home/task_list.html")

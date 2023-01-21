@@ -1,7 +1,7 @@
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
 from django.urls import reverse, reverse_lazy
@@ -29,13 +29,13 @@ def index(request):
     num_types = TaskType.objects.count()
 
     context = {
-        'num_tasks': num_tasks,
+        "num_tasks": num_tasks,
         "num_employees": num_employees,
         "num_positions": num_positions,
         "num_types": num_types,
     }
 
-    html_template = loader.get_template('home/index.html')
+    html_template = loader.get_template("home/index.html")
     return HttpResponse(html_template.render(context, request))
 
 
@@ -50,9 +50,9 @@ class EmployeeListView(LoginRequiredMixin, generic.ListView):
 
         username = self.request.GET.get("username", "")
 
-        context["search_form"] = EmployeeSearchForm(initial={
-            "username": username
-        })
+        context["search_form"] = EmployeeSearchForm(
+            initial={"username": username}
+        )
 
         return context
 
@@ -67,32 +67,35 @@ class EmployeeListView(LoginRequiredMixin, generic.ListView):
         return self.queryset
 
 
-class EmployeeCreateView(generic.CreateView):
+class EmployeeCreateView(LoginRequiredMixin, generic.CreateView):
     model = Employee
     form_class = EmployeeCreationForm
     success_url = reverse_lazy("home:employee-list")
 
 
-class EmployeeUpdateView(generic.UpdateView):
+class EmployeeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Employee
     form_class = EmployeeUpdateForm
     success_url = reverse_lazy("home:employee-list")
 
 
-class EmployeeDeleteView(generic.DeleteView):
+class EmployeeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Employee
     success_url = reverse_lazy("home:employee-list")
 
 
-class EmployeeDetailView(generic.DetailView):
+class EmployeeDetailView(LoginRequiredMixin, generic.DetailView):
     model = Employee
     paginate_by = 5
     template_name = "home/employee_detail.html"
 
 
-class TaskListView(generic.ListView):
+class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
-    queryset = Task.objects.all().select_related("task_type").prefetch_related("assignees")
+    queryset = (
+        Task.objects.all().select_related(
+            "task_type").prefetch_related("assignees")
+    )
     paginate_by = 5
     template_name = "home/task_list.html"
 
@@ -101,9 +104,7 @@ class TaskListView(generic.ListView):
 
         name = self.request.GET.get("name", "")
 
-        context["search_form"] = TaskSearchForm(initial={
-            "name": name
-        })
+        context["search_form"] = TaskSearchForm(initial={"name": name})
 
         return context
 
@@ -118,30 +119,30 @@ class TaskListView(generic.ListView):
         return self.queryset
 
 
-class TaskDetailView(generic.DetailView):
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     paginate_by = 5
     template_name = "home/task_detail.html"
 
 
-class TaskCreateView(generic.CreateView):
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskUpdateCreateForm
     success_url = reverse_lazy("home:task-list")
 
 
-class TaskUpdateView(generic.UpdateView):
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskUpdateCreateForm
     success_url = reverse_lazy("home:task-list")
 
 
-class TaskDeleteView(generic.DeleteView):
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     success_url = reverse_lazy("home:task-list")
 
 
-class TypeListView(generic.ListView):
+class TypeListView(LoginRequiredMixin, generic.ListView):
     model = TaskType
     paginate_by = 5
     template_name = "home/type_list.html"
@@ -151,9 +152,7 @@ class TypeListView(generic.ListView):
 
         name = self.request.GET.get("name", "")
 
-        context["search_form"] = TypeSearchForm(initial={
-            "name": name
-        })
+        context["search_form"] = TypeSearchForm(initial={"name": name})
 
         return context
 
@@ -162,30 +161,28 @@ class TypeListView(generic.ListView):
         self.queryset = TaskType.objects.all()
 
         if form.is_valid():
-            return self.queryset.filter(
-                name__icontains=form.cleaned_data["name"]
-            )
+            return self.queryset.filter(name__icontains=form.cleaned_data["name"])
         return self.queryset
 
 
-class TypeCreateView(generic.CreateView):
+class TypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = TaskType
     form_class = TypeUpdateCreateForm
     success_url = reverse_lazy("home:type-list")
 
 
-class TypeUpdateView(generic.UpdateView):
+class TypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = TaskType
     form_class = TypeUpdateCreateForm
     success_url = reverse_lazy("home:type-list")
 
 
-class TypeDeleteView(generic.DeleteView):
+class TypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = TaskType
     success_url = reverse_lazy("home:type-list")
 
 
-class PositionListView(generic.ListView):
+class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
     paginate_by = 5
 
@@ -194,9 +191,7 @@ class PositionListView(generic.ListView):
 
         name = self.request.GET.get("name", "")
 
-        context["search_form"] = PositionSearchForm(initial={
-            "name": name
-        })
+        context["search_form"] = PositionSearchForm(initial={"name": name})
 
         return context
 
@@ -205,26 +200,24 @@ class PositionListView(generic.ListView):
         self.queryset = Position.objects.all()
 
         if form.is_valid():
-            return self.queryset.filter(
-                name__icontains=form.cleaned_data["name"]
-            )
+            return self.queryset.filter(name__icontains=form.cleaned_data["name"])
         return self.queryset
 
 
-class PositionUpdateView(generic.UpdateView):
+class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Position
     form_class = PositionUpdateCreateForm
     success_url = reverse_lazy("home:position-list")
 
 
-class PositionCreateView(generic.CreateView):
+class PositionCreateView(LoginRequiredMixin, generic.CreateView):
     model = Position
     form_class = PositionUpdateCreateForm
     template_name = "home/position_form.html"
     success_url = reverse_lazy("home:position-list")
 
 
-class PositionDeleteView(generic.DeleteView):
+class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Position
     success_url = reverse_lazy("home:position-list")
 
@@ -238,7 +231,7 @@ def task_status(request, pk, pk2):
 
 
 @login_required
-def employee_assign_to_task(request, pk):
+def employee_assign_to_task(request: HttpRequest, pk):
     employee = Employee.objects.get(id=request.user.id)
     if Task.objects.get(id=pk) in employee.tasks.all():
         employee.tasks.remove(pk)
@@ -252,20 +245,20 @@ def pages(request):
     context = {}
     try:
 
-        load_template = request.path.split('/')[-1]
+        load_template = request.path.split("/")[-1]
 
-        if load_template == 'admin':
-            return HttpResponseRedirect(reverse('admin:index'))
-        context['segment'] = load_template
+        if load_template == "admin":
+            return HttpResponseRedirect(reverse("admin:index"))
+        context["segment"] = load_template
 
-        html_template = loader.get_template('home/' + load_template)
+        html_template = loader.get_template("home/" + load_template)
         return HttpResponse(html_template.render(context, request))
 
     except template.TemplateDoesNotExist:
 
-        html_template = loader.get_template('home/page-404.html')
+        html_template = loader.get_template("home/page-404.html")
         return HttpResponse(html_template.render(context, request))
 
     except:
-        html_template = loader.get_template('home/page-500.html')
+        html_template = loader.get_template("home/page-500.html")
         return HttpResponse(html_template.render(context, request))

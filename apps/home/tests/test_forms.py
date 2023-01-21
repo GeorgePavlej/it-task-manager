@@ -15,7 +15,9 @@ class EmployeeCreationFormTests(TestCase):
     def setUp(self):
         self.position = Position.objects.create(name="Test Developer")
 
-    def test_employee_creation_form_is_subclass_of_user_creation_form_and_base_widget_form(self) -> None:
+    def test_employee_creation_form_is_subclass_of_user_creation_form_and_base_widget_form(
+        self,
+    ) -> None:
         self.assertTrue(issubclass(EmployeeCreationForm, UserCreationForm))
         self.assertTrue(issubclass(EmployeeCreationForm, BaseWidgetForm))
 
@@ -23,26 +25,32 @@ class EmployeeCreationFormTests(TestCase):
         form = EmployeeCreationForm()
 
         self.assertEqual(form._meta.model, Employee)
-        self.assertEqual(form._meta.fields, UserCreationForm.Meta.fields + (
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "position",
-            "image",
-        ))
+        self.assertEqual(
+            form._meta.fields,
+            UserCreationForm.Meta.fields
+            + (
+                "username",
+                "first_name",
+                "last_name",
+                "email",
+                "position",
+                "image",
+            ),
+        )
 
     def test_employee_creation_form_saves_employee_to_database(self) -> None:
-        form = EmployeeCreationForm(data={
-            "username": "test_username",
-            "password1": "test1234test",
-            "password2": "test1234test",
-            "email": "test@test.com",
-            "first_name": "Test",
-            "last_name": "User",
-            "position": self.position,
-            "image": None,
-        })
+        form = EmployeeCreationForm(
+            data={
+                "username": "test_username",
+                "password1": "test1234test",
+                "password2": "test1234test",
+                "email": "test@test.com",
+                "first_name": "Test",
+                "last_name": "User",
+                "position": self.position,
+                "image": None,
+            }
+        )
 
         self.assertTrue(form.is_valid())
 
@@ -52,16 +60,18 @@ class EmployeeCreationFormTests(TestCase):
         self.assertEqual(Employee.objects.first().username, "test_username")
 
     def test_employee_creation_form_handles_invalid_data(self) -> None:
-        form = EmployeeCreationForm(data={
-            "username": "",
-            "password1": "test1234test",
-            "password2": "test1234test",
-            "email": "test@test.com",
-            "first_name": "Test first",
-            "last_name": "Test last",
-            "position": self.position,
-            "image": None,
-        })
+        form = EmployeeCreationForm(
+            data={
+                "username": "",
+                "password1": "test1234test",
+                "password2": "test1234test",
+                "email": "test@test.com",
+                "first_name": "Test first",
+                "last_name": "Test last",
+                "position": self.position,
+                "image": None,
+            }
+        )
 
         self.assertFalse(form.is_valid())
 

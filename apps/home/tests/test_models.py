@@ -6,7 +6,6 @@ from apps.home.models import Position, Task, TaskType, Employee
 
 
 class EmployeeTestCase(TestCase):
-
     def setUp(self) -> None:
 
         self.position = Position.objects.create(name="Test Developer")
@@ -26,7 +25,8 @@ class EmployeeTestCase(TestCase):
             str(self.employee),
             f"{self.employee.username} "
             f"({self.employee.first_name} "
-            f"{self.employee.last_name})")
+            f"{self.employee.last_name})",
+        )
 
     def test_create_employee_with_position(self) -> None:
         self.assertEqual(self.employee.position, self.position)
@@ -55,7 +55,6 @@ class EmployeeTestCase(TestCase):
 
 
 class PositionTestCase(TestCase):
-
     def test_position_str(self) -> None:
         position = Position.objects.create(
             name="Test name",
@@ -65,7 +64,6 @@ class PositionTestCase(TestCase):
 
 
 class TaskTypeTestCase(TestCase):
-
     def test_task_type_str(self) -> None:
         task_type = TaskType.objects.create(
             name="Test name",

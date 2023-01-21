@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0005_alter_task_deadline'),
+        ("home", "0005_alter_task_deadline"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='employee',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to=''),
+            model_name="employee",
+            name="image",
+            field=models.ImageField(blank=True, null=True, upload_to=""),
         ),
     ]

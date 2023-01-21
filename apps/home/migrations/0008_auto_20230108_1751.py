@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0007_auto_20230106_1235'),
+        ("home", "0007_auto_20230106_1235"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='task',
-            name='description',
+            model_name="task",
+            name="description",
             field=models.TextField(),
         ),
         migrations.AlterField(
-            model_name='task',
-            name='priority',
-            field=models.PositiveSmallIntegerField(choices=[(1, 'Low'), (2, 'High'), (3, 'Urgent')], default=2),
+            model_name="task",
+            name="priority",
+            field=models.PositiveSmallIntegerField(
+                choices=[(1, "Low"), (2, "High"), (3, "Urgent")], default=2
+            ),
         ),
     ]

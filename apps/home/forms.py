@@ -12,7 +12,6 @@ from apps.home.models import (
 
 
 class BaseWidgetForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
@@ -20,7 +19,6 @@ class BaseWidgetForm(forms.ModelForm):
 
 
 class EmployeeCreationForm(UserCreationForm, BaseWidgetForm):
-
     class Meta:
         model = Employee
         fields = UserCreationForm.Meta.fields + (
@@ -34,7 +32,6 @@ class EmployeeCreationForm(UserCreationForm, BaseWidgetForm):
 
 
 class EmployeeUpdateForm(BaseWidgetForm):
-
     class Meta:
         model = Employee
         fields = (
@@ -51,8 +48,7 @@ class TaskUpdateCreateForm(BaseWidgetForm):
 
     deadline = forms.DateTimeField(widget=forms.SelectDateWidget)
     assignees = forms.ModelMultipleChoiceField(
-        queryset=get_user_model().objects.all(),
-        widget=forms.CheckboxSelectMultiple
+        queryset=get_user_model().objects.all(), widget=forms.CheckboxSelectMultiple
     )
 
     class Meta:
@@ -60,21 +56,19 @@ class TaskUpdateCreateForm(BaseWidgetForm):
         fields = "__all__"
 
     def clean_deadline(self):
-        deadline = self.cleaned_data['deadline']
+        deadline = self.cleaned_data["deadline"]
         if deadline < timezone.now():
             raise forms.ValidationError("The deadline cannot be in the past")
         return deadline
 
 
 class PositionUpdateCreateForm(BaseWidgetForm):
-
     class Meta:
         model = Position
         fields = ("name",)
 
 
 class TypeUpdateCreateForm(BaseWidgetForm):
-
     class Meta:
         model = TaskType
         fields = ("name",)
@@ -85,9 +79,7 @@ class EmployeeSearchForm(forms.Form):
         max_length=63,
         required=False,
         label="",
-        widget=forms.TextInput(
-            attrs={"placeholder": "Search by username"}
-        )
+        widget=forms.TextInput(attrs={"placeholder": "Search by username"}),
     )
 
 
@@ -96,9 +88,7 @@ class PositionSearchForm(forms.Form):
         max_length=63,
         required=False,
         label="",
-        widget=forms.TextInput(
-            attrs={"placeholder": "Search"}
-        )
+        widget=forms.TextInput(attrs={"placeholder": "Search"}),
     )
 
 
@@ -107,9 +97,7 @@ class TaskSearchForm(forms.Form):
         max_length=63,
         required=False,
         label="",
-        widget=forms.TextInput(
-            attrs={"placeholder": "Search by task name"}
-        )
+        widget=forms.TextInput(attrs={"placeholder": "Search by task name"}),
     )
 
 
@@ -118,7 +106,5 @@ class TypeSearchForm(forms.Form):
         max_length=63,
         required=False,
         label="",
-        widget=forms.TextInput(
-            attrs={"placeholder": "Search"}
-        )
+        widget=forms.TextInput(attrs={"placeholder": "Search"}),
     )

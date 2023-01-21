@@ -7,17 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0006_employee_image'),
+        ("home", "0006_employee_image"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='task',
-            options={'ordering': ('name',)},
+            name="task",
+            options={"ordering": ("name",)},
         ),
         migrations.AlterField(
-            model_name='employee',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to=apps.home.models.create_upload_path),
+            model_name="employee",
+            name="image",
+            field=models.ImageField(
+                blank=True, null=True, upload_to=apps.home.models.create_upload_path
+            ),
         ),
     ]

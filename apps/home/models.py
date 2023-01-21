@@ -16,10 +16,8 @@ class Position(models.Model):
 
 
 def create_upload_path(instance: Type, filename: str) -> str:
-    # Create a path for the file using the model name and the original filename
     path = f"{instance.__class__.__name__}/{filename}"
 
-    # Check if the directory for the path exists, create it if necessary
     dirname = os.path.dirname(path)
     if not os.path.exists(dirname):
         os.makedirs(dirname)
@@ -34,10 +32,7 @@ class Employee(AbstractUser):
         upload_to=create_upload_path,
     )
     position = models.ForeignKey(
-        Position,
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE
+        Position, blank=True, null=True, on_delete=models.CASCADE
     )
 
     class Meta:
@@ -90,7 +85,6 @@ class Task(models.Model):
         choices=PRIORITY_CHOICES,
         default=2
     )
-
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     deadline = models.DateTimeField(blank=True, null=True)
