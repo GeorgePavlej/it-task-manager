@@ -2,12 +2,16 @@ from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.test import TestCase
 
-from apps.home.models import Position, Task, TaskType, Employee
+from apps.home.models import (
+    Position,
+    Task,
+    TaskType,
+    Employee,
+)
 
 
 class EmployeeTestCase(TestCase):
     def setUp(self) -> None:
-
         self.position = Position.objects.create(name="Test Developer")
         self.task_type = TaskType.objects.create(name="Test name")
 
@@ -20,7 +24,6 @@ class EmployeeTestCase(TestCase):
         )
 
     def test_employee_str(self) -> None:
-
         self.assertEqual(
             str(self.employee),
             f"{self.employee.username} "
@@ -39,11 +42,9 @@ class EmployeeTestCase(TestCase):
         self.assertTrue(self.employee.image)
 
     def test_calc_progress_when_zero(self) -> None:
-
         self.assertEqual(self.employee.calc_progress, 0)
 
     def test_calc_progress_with_three_tasks(self) -> None:
-
         tasks = [
             Task.objects.create(task_type=self.task_type, is_completed=True),
             Task.objects.create(task_type=self.task_type, is_completed=False),
@@ -74,7 +75,6 @@ class TaskTypeTestCase(TestCase):
 
 class TaskTestCase(TestCase):
     def setUp(self) -> None:
-
         self.task_type1 = TaskType.objects.create(name="Test task type1")
         self.task_type2 = TaskType.objects.create(name="Test task type2")
         self.employee1 = Employee.objects.create(username="Test name1")
@@ -109,7 +109,6 @@ class TaskTestCase(TestCase):
         self.task4.assignees.add(self.employee2)
 
     def test_task_fields(self) -> None:
-
         self.assertEqual(self.task1.name, "Task 1")
         self.assertEqual(self.task1.task_type, self.task_type1)
         self.assertTrue(self.task1.is_completed)
@@ -120,6 +119,5 @@ class TaskTestCase(TestCase):
         self.assertEqual(self.task2.deadline, "2023-01-08")
 
     def test_task_str(self) -> None:
-
         self.assertEqual(str(self.task1), "Task 1")
         self.assertEqual(str(self.task2), "Task 2")

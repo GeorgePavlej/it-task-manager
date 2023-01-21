@@ -57,9 +57,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "core.urls"
-LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
-TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
+TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")
 
 TEMPLATES = [
     {
@@ -123,7 +123,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 STATIC_ROOT = os.path.join(CORE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 
@@ -136,6 +135,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_FILE_STORAGE = os.environ.get(
     "DEFAULT_FILE_STORAGE", "django.core.files.storage.FileSystemStorage"
 )
+
 DROPBOX_OAUTH2_TOKEN = os.environ.get("DROPBOX_OAUTH2_TOKEN")
 DROPBOX_APP_KEY = os.environ.get("DROPBOX_APP_KEY")
 DROPBOX_APP_SECRET = os.environ.get("DROPBOX_APP_SECRET")

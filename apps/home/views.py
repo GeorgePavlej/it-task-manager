@@ -2,13 +2,22 @@ from django import template
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
 from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.http import (
+    HttpResponse,
+    HttpResponseRedirect,
+    HttpRequest,
+)
 
-from apps.home.models import Task, Employee, Position, TaskType
+from apps.home.models import (
+    Task,
+    Employee,
+    Position,
+    TaskType,
+)
 from apps.home.forms import (
     EmployeeCreationForm,
     EmployeeUpdateForm,

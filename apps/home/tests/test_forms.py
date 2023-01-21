@@ -1,7 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.test import TestCase
 
-from apps.home.models import Position, Employee, Task, TaskType
+from apps.home.models import (
+    Position,
+    Employee,
+    Task,
+    TaskType,
+)
 from apps.home.forms import (
     EmployeeCreationForm,
     TaskUpdateCreateForm,
@@ -15,13 +20,13 @@ class EmployeeCreationFormTests(TestCase):
     def setUp(self):
         self.position = Position.objects.create(name="Test Developer")
 
-    def test_employee_creation_form_is_subclass_of_user_creation_form_and_base_widget_form(
+    def test_employee_creation_form_is_subclass_of_user_creation_form(
         self,
     ) -> None:
         self.assertTrue(issubclass(EmployeeCreationForm, UserCreationForm))
         self.assertTrue(issubclass(EmployeeCreationForm, BaseWidgetForm))
 
-    def test_employee_creation_form_has_correct_model_and_fields(self) -> None:
+    def test_employee_creation_form_has_correct_model_and_field(self) -> None:
         form = EmployeeCreationForm()
 
         self.assertEqual(form._meta.model, Employee)

@@ -2,7 +2,12 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from apps.home.models import Employee, Task, TaskType, Position
+from apps.home.models import (
+    Employee,
+    Task,
+    TaskType,
+    Position,
+)
 
 
 EMPLOYEE_URL = reverse("home:employee-list")
