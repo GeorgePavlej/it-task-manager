@@ -22,6 +22,7 @@ password: 13570530
 * Tasks can be delegated to certain employees and tracked
 * Each employee has his own detail page with completed and uncompleted task displayed separately
 * All tasks can be prioritised to manage time more effectively and  hit deadlines
+* custom admin panel
 
 ## Demo
 
