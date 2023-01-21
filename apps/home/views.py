@@ -1,6 +1,7 @@
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
@@ -22,7 +23,7 @@ from apps.home.forms import (
 
 
 @login_required(login_url="/login/")
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     num_tasks = Task.objects.count()
     num_employees = Employee.objects.count()
     num_positions = Position.objects.count()
@@ -45,7 +46,7 @@ class EmployeeListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
     template_name = "home/employee_list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(EmployeeListView, self).get_context_data(**kwargs)
 
         username = self.request.GET.get("username", "")
@@ -56,7 +57,7 @@ class EmployeeListView(LoginRequiredMixin, generic.ListView):
 
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         form = EmployeeSearchForm(self.request.GET)
         self.queryset = Employee.objects.all()
 
@@ -99,7 +100,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
     template_name = "home/task_list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(TaskListView, self).get_context_data(**kwargs)
 
         name = self.request.GET.get("name", "")
@@ -108,7 +109,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
 
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         form = TaskSearchForm(self.request.GET)
         self.queryset = Task.objects.all()
 
@@ -147,7 +148,7 @@ class TypeListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
     template_name = "home/type_list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(TypeListView, self).get_context_data(**kwargs)
 
         name = self.request.GET.get("name", "")
@@ -156,7 +157,7 @@ class TypeListView(LoginRequiredMixin, generic.ListView):
 
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         form = TypeSearchForm(self.request.GET)
         self.queryset = TaskType.objects.all()
 
@@ -186,7 +187,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
     paginate_by = 5
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PositionListView, self).get_context_data(**kwargs)
 
         name = self.request.GET.get("name", "")
@@ -195,7 +196,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
 
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         form = PositionSearchForm(self.request.GET)
         self.queryset = Position.objects.all()
 
@@ -223,7 +224,8 @@ class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 @login_required
-def task_status(request, pk, pk2):
+def task_status(
+        request: HttpRequest, pk: int, pk2: int) -> HttpResponseRedirect:
     task = get_object_or_404(Task, pk=pk)
     task.is_completed = not task.is_completed
     task.save()
@@ -231,7 +233,8 @@ def task_status(request, pk, pk2):
 
 
 @login_required
-def employee_assign_to_task(request: HttpRequest, pk):
+def employee_assign_to_task(
+        request: HttpRequest, pk: int) -> HttpResponseRedirect:
     employee = Employee.objects.get(id=request.user.id)
     if Task.objects.get(id=pk) in employee.tasks.all():
         employee.tasks.remove(pk)
@@ -241,7 +244,7 @@ def employee_assign_to_task(request: HttpRequest, pk):
 
 
 @login_required(login_url="/login/")
-def pages(request):
+def pages(request: HttpRequest) -> HttpResponse:
     context = {}
     try:
 
