@@ -1,0 +1,46 @@
+{% load query_transform %}
+
+
+{% if is_paginated %}
+  <section class="py-3">
+  <div class="container">
+  <div class="row justify-space-between py-2">
+  <div class="col-lg-4 mx-auto">
+  <ul class="pagination pagination-secondary m-4">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+      <a class="page-link" href="?{% query_transform request page=page_obj.previous_page_number %}"
+         aria-label="Previous">
+        <span aria-hidden="true"><i class="material-icons" aria-hidden="true">chevron_left</i></span>
+      </a>
+    {% endif %}
+    </li>
+    <li class="page-item active">
+      <a class="page-link">{{ page_obj.number }} of {{ paginator.num_pages }}</a>
+    </li>
+{#              <li class="page-item">#}
+{#                <a class="page-link" href="javascript:;">2</a>#}
+{#              </li>#}
+{#              <li class="page-item">#}
+{#                <a class="page-link" href="javascript:;">3</a>#}
+{#              </li>#}
+{#              <li class="page-item">#}
+{#                <a class="page-link" href="javascript:;">4</a>#}
+{#              </li>#}
+{#              <li class="page-item">#}
+{#                <a class="page-link" href="javascript:;">5</a>#}
+{#              </li>#}
+    {% if page_obj.has_next %}
+
+      <li class="page-item">
+        <a class="page-link" href="?{% query_transform request page=page_obj.next_page_number %}" aria-label="Next">
+          <span aria-hidden="true"><i class="material-icons" aria-hidden="true">chevron_right</i></span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+{% endif %}
+</div>
+</div>
+</div>
+</section>

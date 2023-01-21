@@ -1,0 +1,160 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Employee details {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <header>
+        <div class="page-header min-height-400" style="background-image: url('{{ ASSETS_ROOT }}/img/city-profile.jpg');"
+             loading="lazy">
+            <span class="mask bg-gradient-dark opacity-8"></span>
+        </div>
+    </header>
+
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n10 mb-4">
+        <!-- START Testimonials w/ user image & text & info -->
+        <section class="py-sm-7 py-5 position-relative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="mt-n8 mt-md-n9 text-center">
+                            {% if employee.image %}
+                                <img class="avatar avatar-xxl shadow-xl position-relative z-index-2"
+                                     src="{{ MEDIA_URL }}{{ employee.image.url }}" alt="bruce" loading="lazy">
+                            {% else %}
+                                <img class="avatar avatar-xxl shadow-xl position-relative z-index-2"
+                                     src="{{ ASSETS_ROOT }}/img/default-avatar.png" alt="bruce" loading="lazy">
+                            {% endif %}
+                        </div>
+                        <div class="row py-5">
+                            <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h3 class="mb-0">{{ employee.first_name }} {{ employee.last_name }}</h3>
+                                    <a href="{% url 'home:employee-update' pk=employee.pk %}"
+                                       class="btn btn-sm btn-outline-info text-nowrap mb-0">
+                                        Update
+                                    </a>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-auto">
+                                        <span class="h6">Position: {{ employee.position }}</span>
+                                    </div>
+                                    <div class="col-auto">
+                    <span
+                            class="h6">Task{{ employee.tasks.count|pluralize }} assigned: {{ employee.tasks.count }}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span class="h6">Email: {{ employee.email }}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span class="h6">Date joined: {{ employee.date_joined|date:"d/m/Y" }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% if employee.tasks %}
+                    <div class="col-12">
+                    <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h3>Assigned tasks</h3>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Task</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                Priority
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Task type
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Description
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Status
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Change Status
+                            </th>
+                            <th class="text-secondary opacity-7"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for task in employee.tasks.all %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'home:task-detail' pk=task.pk %}">
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">{{ task }}</h6>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if task.priority == 1 %}
+                                        <span class="badge badge-sm bg-gradient-dark">{{ task.get_priority_display }}</span>
+                                    {% elif task.priority == 2 %}
+                                        <span class="badge badge-sm bg-gradient-warning">{{ task.get_priority_display }}</span>
+                                    {% elif task.priority == 3 %}
+                                        <span class="badge badge-sm bg-gradient-danger">{{ task.get_priority_display }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">{{ task.task_type }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                  <span type="button" class="badge badge-sm bg-gradient-secondary" data-bs-container="body"
+                        data-bs-toggle="popover" data-bs-placement="bottom"
+                        data-bs-content="{{ task.description }}">
+                    Open
+                  </span>
+                                </td>
+                                {% if task.is_completed %}
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">Done</span>
+                                    </td>
+                                {% else %}
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">Not Done</span>
+                                    </td>
+                                {% endif %}
+                                {% if task.is_completed %}
+                                    <td class="align-middle text-center">
+                                        <a type="button" href="{% url 'home:task-status' pk=task.id pk2=employee.id %}"
+                                           class="badge badge-sm bg-gradient-secondary float-right">Undo</a>
+                                    </td>
+                                {% else %}
+                                    <td class="align-middle text-center">
+                                        <a type="button" href="{% url 'home:task-status' pk=task.id pk2=employee.id %}"
+                                           class="badge badge-sm bg-gradient-success float-right">Complete</a>
+                                    </td>
+                                {% endif %}
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p>There are no tasks to be completed in the list.</p>
+                {% endif %}
+                </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

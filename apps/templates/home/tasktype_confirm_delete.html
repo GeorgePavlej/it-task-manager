@@ -1,0 +1,13 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+  <h1 class="mt-8 ms-4">Are you sure you want to delete {{ tasktype }}?</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Yes" class="btn btn-danger ms-7">
+    <a class="btn btn-secondary ms-3" href="{% url 'home:type-list' %}">Cancel</a>
+
+  </form>
+{% endblock %}
