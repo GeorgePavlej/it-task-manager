@@ -15,7 +15,7 @@ class BaseWidgetForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({"style": "border: 2px solid #878787;"})
+            field.widget.attrs.update({"style": "border: 1px solid #878787;"})
 
 
 class EmployeeCreationForm(UserCreationForm, BaseWidgetForm):
@@ -48,7 +48,8 @@ class TaskUpdateCreateForm(BaseWidgetForm):
 
     deadline = forms.DateTimeField(widget=forms.SelectDateWidget)
     assignees = forms.ModelMultipleChoiceField(
-        queryset=get_user_model().objects.all(), widget=forms.CheckboxSelectMultiple
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple
     )
 
     class Meta:
