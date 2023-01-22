@@ -46,6 +46,7 @@ python3 -m venv venv
 source venv/bin/activate  # on macOS
 venv\Scripts\activate  # on Windows 
 pip install -r requirements.txt
+copy .env.sample -> .env and populate with all required data
 python manage.py migrate
 python manage.py runserver #starts Django Server
 ```
