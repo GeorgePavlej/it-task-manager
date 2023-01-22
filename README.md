@@ -5,7 +5,7 @@ This is a Task Manager that makes it easy for you to keep track of all Tasks, Ta
 
 ## Try it out
 
-[Task Manager project deployed to Render](https://appseed.us/product/material-kit2-pro/django/) -
+Task Manager project deployed to Render -
 * https://it-task-manager-y0dz.onrender.com/
 
 Use the following user to log in and check the functionality of the website: 
